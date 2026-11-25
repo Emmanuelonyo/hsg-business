@@ -1,0 +1,412 @@
+// Hybrid Settlement Gateway — data model.
+// Money is ALWAYS BigInt in minor units: NGN in kobo, USD in cents.
+// Token amounts on chain use 6 decimals: tokenUnits = usdCents * 10_000.
+// Triggers, role grants and the ledger_head seed row live in the raw SQL migration
+// (prisma/migrations/0002_ledger_guards) because Prisma cannot express them.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("MIGRATE_DATABASE_URL") // migrations run as the owner role
+}
+
+enum Role {
+  SME
+  OPERATOR
+}
+
+enum KybStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum ScreeningStatus {
+  CLEARED
+  BLOCKED
+}
+
+enum TransferState {
+  CREATED
+  SCREENING
+  HELD
+  RESERVED
+  ONCHAIN_PENDING
+  ONCHAIN_CONFIRMED
+  PAYOUT_PENDING
+  COMPLETED
+  REVERSING
+  REVERSED
+  DECLINED
+}
+
+enum LedgerAccountType {
+  ASSET
+  LIABILITY
+  CLEARING
+  INCOME
+}
+
+enum Side {
+  DEBIT
+  CREDIT
+}
+
+enum CheckResult {
+  PASS
+  FAIL
+  HOLD
+}
+
+enum WalletKind {
+  TREASURY
+  PROVIDER
+}
+
+enum ChainTxKind {
+  SEND
+  RETURN
+  ADJUSTMENT
+}
+
+enum ChainTxStatus {
+  PENDING
+  CONFIRMED
+  FAILED
+}
+
+enum PayoutStatus {
+  CREATED
+  SUBMITTED
+  PAID
+  FAILED
+  CANCELLED
+}
+
+enum StepStatus {
+  RUNNING
+  COMPLETED
+  FAILED
+  COMPENSATED
+}
+
+model User {
+  id           String   @id // usr_<ulid>
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  role         Role
+  smeId        String?  @map("sme_id")
+  sme          SmeAccount? @relation(fields: [smeId], references: [id])
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("users")
+}
+
+model SmeAccount {
+  id            String    @id // sme_<ulid>
+  legalName     String    @map("legal_name")
+  country       String    @default("NG")
+  address       String
+  rcNumber      String?   @map("rc_number")
+  kybStatus     KybStatus @default(PENDING) @map("kyb_status")
+  webhookUrl    String?   @map("webhook_url")
+  webhookSecret String?   @map("webhook_secret")
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  users          User[]
+  virtualAccount VirtualAccount?
+  beneficiaries  Beneficiary[]
+  quotes         Quote[]
+  transfers      Transfer[]
+
+  @@map("sme_accounts")
+}
+
+model VirtualAccount {
+  id            String     @id // va_<ulid>
+  smeId         String     @unique @map("sme_id")
+  sme           SmeAccount @relation(fields: [smeId], references: [id])
+  accountNumber String     @unique @map("account_number") // 10 digits NUBAN-style
+  bankName      String     @map("bank_name")
+  accountName   String     @map("account_name")
+  createdAt     DateTime   @default(now()) @map("created_at")
+
+  @@map("virtual_accounts")
+}
+
+model Beneficiary {
+  id              String          @id // bn_<ulid>
+  smeId           String          @map("sme_id")
+  sme             SmeAccount      @relation(fields: [smeId], references: [id])
+  name            String
+  country         String // ISO-3166 alpha-2
+  bankName        String          @map("bank_name")
+  accountNumber   String          @map("account_number") // account number or IBAN
+  swiftBic        String?         @map("swift_bic")
+  address         String
+  currency        String          @default("USD")
+  payoutRail      String?         @map("payout_rail") // wire | ach | sepa | ...  (ops-only)
+  screeningStatus ScreeningStatus @map("screening_status")
+  screeningDetail Json?           @map("screening_detail")
+  createdAt       DateTime        @default(now()) @map("created_at")
+
+  transfers Transfer[]
+
+  @@index([smeId])
+  @@map("beneficiaries")
+}
+
+model Quote {
+  id           String     @id // qt_<ulid>
+  smeId        String     @map("sme_id")
+  sme          SmeAccount @relation(fields: [smeId], references: [id])
+  usdAmount    BigInt     @map("usd_amount") // cents
+  rate         String // NGN per 1 USD, 2dp string e.g. "1580.00"
+  principalNgn BigInt     @map("principal_ngn") // kobo = usdAmount * rate
+  feeNgn       BigInt     @map("fee_ngn") // kobo
+  totalNgn     BigInt     @map("total_ngn") // kobo = principal + fee
+  referenceRate String?   @map("reference_rate") // provider/mid rate before margin (ops-only)
+  expiresAt    DateTime   @map("expires_at")
+  usedAt       DateTime?  @map("used_at")
+  createdAt    DateTime   @default(now()) @map("created_at")
+
+  transfer Transfer?
+
+  @@index([smeId])
+  @@map("quotes")
+}
+
+model Wallet {
+  id        String     @id // wl_<ulid>
+  label     String
+  address   String     @unique // checksummed 0x...
+  kind      WalletKind
+  keyIndex  Int        @map("key_index") // index into the local signer key set (chain.local.json)
+  createdAt DateTime   @default(now()) @map("created_at")
+
+  @@map("wallets")
+}
+
+model Transfer {
+  id             String        @id // tr_<ulid>
+  reference      String        @unique // HSG-YYYYMMDD-NNNNNN
+  smeId          String        @map("sme_id")
+  sme            SmeAccount    @relation(fields: [smeId], references: [id])
+  beneficiaryId  String        @map("beneficiary_id")
+  beneficiary    Beneficiary   @relation(fields: [beneficiaryId], references: [id])
+  quoteId        String        @unique @map("quote_id")
+  quote          Quote         @relation(fields: [quoteId], references: [id])
+  status         TransferState @default(CREATED)
+  purpose        String
+  travelRule     Json          @map("travel_rule") // {originator:{name,account,address}, beneficiary:{name,account,address}}
+  idempotencyKey String        @map("idempotency_key")
+  requestHash    String        @map("request_hash") // sha256 of canonical request body
+  usdAmount      BigInt        @map("usd_amount") // cents
+  rate           String
+  principalNgn   BigInt        @map("principal_ngn") // kobo
+  feeNgn         BigInt        @map("fee_ngn") // kobo
+  totalNgn       BigInt        @map("total_ngn") // kobo (amount held/debited)
+  treasuryWallet String?       @map("treasury_wallet") // address chosen for CHAIN_SEND (ops-only)
+  failureReason  String?       @map("failure_reason") // plain-language reason, safe to show SME
+  heldRule       String?       @map("held_rule") // which gate held it
+  currentStep    String?       @map("current_step")
+
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @updatedAt @map("updated_at")
+  screeningAt        DateTime? @map("screening_at")
+  heldAt             DateTime? @map("held_at")
+  reservedAt         DateTime? @map("reserved_at")
+  onchainPendingAt   DateTime? @map("onchain_pending_at")
+  onchainConfirmedAt DateTime? @map("onchain_confirmed_at")
+  payoutPendingAt    DateTime? @map("payout_pending_at")
+  completedAt        DateTime? @map("completed_at")
+  reversingAt        DateTime? @map("reversing_at")
+  reversedAt         DateTime? @map("reversed_at")
+  declinedAt         DateTime? @map("declined_at")
+
+  complianceChecks  ComplianceCheck[]
+  chainTransactions ChainTransaction[]
+  payoutOrder       PayoutOrder?
+  sagaSteps         SagaStep[]
+
+  @@unique([smeId, idempotencyKey])
+  @@index([status])
+  @@index([smeId, createdAt])
+  @@map("transfers")
+}
+
+model LedgerAccount {
+  id         String            @id // la_<ulid>
+  code       String            @unique // "1000", "2000-sme_01J..", ...
+  name       String
+  type       LedgerAccountType
+  currency   String // NGN | USD
+  ownerSmeId String?           @map("owner_sme_id") // null for house accounts
+  createdAt  DateTime          @default(now()) @map("created_at")
+
+  @@map("ledger_accounts")
+}
+
+model JournalEntry {
+  id         String        @id // je_<ulid>
+  seq        BigInt        @unique // gapless, assigned under ledger_head lock
+  reference  String        @unique // "{transfer_id}:{EVENT}" or "inflow:{session_id}"
+  event      String
+  transferId String?       @map("transfer_id")
+  memo       String?
+  prevHash   String        @map("prev_hash")
+  entryHash  String        @map("entry_hash")
+  createdAt  DateTime      @map("created_at") // set explicitly by postEntry (part of the hash)
+  lines      JournalLine[]
+
+  @@index([transferId])
+  @@map("journal_entries")
+}
+
+model JournalLine {
+  id          String       @id // jl_<ulid>
+  entryId     String       @map("entry_id")
+  entry       JournalEntry @relation(fields: [entryId], references: [id])
+  accountCode String       @map("account_code")
+  side        Side
+  amount      BigInt // positive integer, minor units
+  currency    String
+
+  @@index([accountCode])
+  @@index([entryId])
+  @@map("journal_lines")
+}
+
+model LedgerHead {
+  id       Int    @id @default(1)
+  lastSeq  BigInt @map("last_seq")
+  lastHash String @map("last_hash")
+
+  @@map("ledger_head")
+}
+
+model ComplianceCheck {
+  id         String      @id // cc_<ulid>
+  transferId String?     @map("transfer_id")
+  transfer   Transfer?   @relation(fields: [transferId], references: [id])
+  smeId      String?     @map("sme_id")
+  subject    String      @default("TRANSFER") // TRANSFER | SME | BENEFICIARY
+  gate       String // KYB | SANCTIONS | TRAVEL_RULE | THRESHOLD | VELOCITY | REVIEW
+  result     CheckResult
+  detail     Json // {rule, matched?, value?, limit?, reason?}
+  createdAt  DateTime    @default(now()) @map("created_at")
+
+  @@index([transferId])
+  @@index([smeId])
+  @@map("compliance_checks")
+}
+
+model AuditLog {
+  id        String   @id // al_<ulid>
+  actor     String // user id or "system"
+  action    String
+  entity    String
+  entityId  String   @map("entity_id")
+  data      Json?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([entity, entityId])
+  @@map("audit_log")
+}
+
+model ChainTransaction {
+  id           String        @id // ct_<ulid>
+  transferId   String?       @map("transfer_id")
+  transfer     Transfer?     @relation(fields: [transferId], references: [id])
+  kind         ChainTxKind
+  fromAddress  String        @map("from_address")
+  toAddress    String        @map("to_address")
+  tokenAmount  BigInt        @map("token_amount") // 6-decimal token units
+  txHash       String        @unique @map("tx_hash")
+  nonce        Int
+  status       ChainTxStatus @default(PENDING)
+  blockNumber  BigInt?       @map("block_number")
+  gasUsed      BigInt?       @map("gas_used")
+  createdAt    DateTime      @default(now()) @map("created_at")
+  confirmedAt  DateTime?     @map("confirmed_at")
+
+  @@unique([transferId, kind])
+  @@map("chain_transactions")
+}
+
+model LiquidityProvider {
+  id            String   @id // lp_<ulid>
+  name          String   @unique
+  rate          String // NGN per USD the provider charges, 2dp string
+  capacityUsd   BigInt   @map("capacity_usd") // cents of remaining payout capacity
+  reliability   Float // 0..1 probability a payout succeeds
+  payoutDelayMs Int      @default(3000) @map("payout_delay_ms")
+  walletAddress String   @map("wallet_address")
+  adapter       String   @default("SIMULATED") // SIMULATED | BRIDGE
+  active        Boolean  @default(true)
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  payoutOrders PayoutOrder[]
+
+  @@map("liquidity_providers")
+}
+
+model PayoutOrder {
+  id          String            @id // po_<ulid>
+  transferId  String            @unique @map("transfer_id")
+  transfer    Transfer          @relation(fields: [transferId], references: [id])
+  providerId  String            @map("provider_id")
+  provider    LiquidityProvider @relation(fields: [providerId], references: [id])
+  usdAmount   BigInt            @map("usd_amount")
+  rate        String
+  score       Float?
+  status      PayoutStatus      @default(CREATED)
+  externalRef String?           @map("external_ref")
+  failure     String?
+  createdAt   DateTime          @default(now()) @map("created_at")
+  paidAt      DateTime?         @map("paid_at")
+
+  @@map("payout_orders")
+}
+
+model SagaStep {
+  id         String     @id // ss_<ulid>
+  transferId String     @map("transfer_id")
+  transfer   Transfer   @relation(fields: [transferId], references: [id])
+  step       String // SCREEN | RESERVE | MATCH | CHAIN_SEND | CHAIN_CONFIRM | PAYOUT | FINALISE | COMP_<STEP>
+  attempt    Int
+  status     StepStatus
+  startedAt  DateTime   @default(now()) @map("started_at")
+  endedAt    DateTime?  @map("ended_at")
+  error      String?
+
+  @@index([transferId, step])
+  @@map("saga_steps")
+}
+
+model Watchlist {
+  id      String @id // wl_<ulid>
+  name    String
+  country String
+  source  String @default("SEED")
+
+  @@map("watchlist")
+}
+
+model WebhookEvent {
+  id        String   @id // wh_<ulid>
+  smeId     String?  @map("sme_id")
+  direction String   @default("OUTBOUND") // OUTBOUND (sent) | SINK (received at /sim/webhook-sink)
+  event     String
+  url       String?
+  payload   Json
+  signature String?
+  status    Int?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("webhook_events")
+}
