@@ -41,6 +41,9 @@ interface ChainConfig {
 }
 
 function loadChainConfig(): ChainConfig {
+  // Hosted (e.g. Railway): the config arrives as CHAIN_CONFIG_JSON (raw JSON or base64) instead of a file.
+  const inline = process.env.CHAIN_CONFIG_JSON?.trim();
+  if (inline) return JSON.parse(inline.startsWith('{') ? inline : Buffer.from(inline, 'base64').toString('utf8'));
   const p = path.resolve(process.cwd(), ENV.chainConfigPath);
   if (!fs.existsSync(p)) {
     console.error(`\n✗ ${p} not found: run npm run chain:deploy first\n`);
