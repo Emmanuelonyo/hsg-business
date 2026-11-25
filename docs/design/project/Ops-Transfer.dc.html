@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Operator: transfer detail</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0D3542}a:hover{color:#08252E}
+</style>
+</helmet>
+<div style="min-height: 1040px; display: flex; flex-wrap: wrap; background: #F5F7F2; font-family: Poppins, system-ui, sans-serif; color: #0D3542; font-variant-numeric: tabular-nums">
+
+<nav aria-label="Console" style="flex: 1 1 220px; max-width: 100%; background: #08252E; padding: 28px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; align-items: center; gap: 10px; padding: 0 8px">
+<svg width="32" height="32" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#E4FF1A"></rect><g fill="#08252E"><rect x="21" y="9" width="6" height="30" rx="3"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(45 24 24)"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(90 24 24)"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(135 24 24)"></rect></g></svg>
+<div style="display: flex; flex-direction: column"><span style="font-weight: 600; font-size: 15px; color: #FFFFFF">HSG Console</span><span style="font-size: 11px; color: #9FB4BA; letter-spacing: 0.06em; text-transform: uppercase">Operator</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<a href="Ops-Transfer.dc.html" aria-current="page" style="display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 14px; border-radius: 999px; background: #E4FF1A; color: #08252E; font-size: 14px; font-weight: 600; text-decoration: none"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 6h12M4 10h12M4 14h8" fill="none" stroke="currentColor" style="stroke-width: 1.7; stroke-linecap: round"></path></svg>Transfers</a>
+<a href="Ops-Review.dc.html" style="display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 14px; border-radius: 999px; color: #D5E0E3; font-size: 14px; font-weight: 500; text-decoration: none"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5l6 2.5v4.5c0 3.8-2.6 6.6-6 8-3.4-1.4-6-4.2-6-8V5z" fill="none" stroke="currentColor" style="stroke-width: 1.7; stroke-linejoin: round"></path></svg>Review queue<span style="margin-left: auto; min-width: 22px; height: 22px; border-radius: 999px; background: #F79009; color: #08252E; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center">2</span></a>
+<a href="Ops-Ledger.dc.html" style="display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 14px; border-radius: 999px; color: #D5E0E3; font-size: 14px; font-weight: 500; text-decoration: none"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.5h10a1 1 0 0 1 1 1v12l-2.5-1.5L11 16.5 8.5 15 6 16.5 4 15V4.5a1 1 0 0 1 1-1zM7 7.5h6M7 10.5h6" fill="none" stroke="currentColor" style="stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round"></path></svg>Ledger</a>
+<a href="Ops-Simulator.dc.html" style="display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 14px; border-radius: 999px; color: #D5E0E3; font-size: 14px; font-weight: 500; text-decoration: none"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 6h7M15 6h1M4 14h1M9 14h7" fill="none" stroke="currentColor" style="stroke-width: 1.7; stroke-linecap: round"></path><circle cx="13" cy="6" r="2" fill="none" stroke="currentColor" style="stroke-width: 1.7"></circle><circle cx="7" cy="14" r="2" fill="none" stroke="currentColor" style="stroke-width: 1.7"></circle></svg>Simulator</a>
+</div>
+<div style="margin-top: auto; padding: 14px 10px 0; border-top: 1px solid #1B3F4A; font-size: 12px; line-height: 18px; color: #9FB4BA">Test network · simulated bank and providers<br/>Signed in as ops@hsg.test</div>
+</nav>
+
+<main style="flex: 999 1 560px; min-width: 0; padding: 30px 36px 48px; box-sizing: border-box">
+<div style="max-width: 1160px; display: flex; flex-direction: column; gap: 20px">
+
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="font-size: 13px; color: #4A6670">Transfers / <span style="font-family: 'IBM Plex Mono', monospace">tr_01JDX4K9Q2</span></div>
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
+<h1 style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 24px; font-weight: 500">HSG-20261123-000142</h1>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 6px; background: #E4FF1A; color: #08252E; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500">COMPLETED</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 999px; border: 1px dashed #4A6670; color: #4A6670; font-size: 12px">Sample data</span>
+</div>
+</div>
+<div style="display: flex; gap: 10px">
+<button type="button" disabled style="height: 42px; padding: 0 18px; border: 1.5px solid #C4CFCC; border-radius: 999px; background: #FFFFFF; color: #7A8F95; font-family: Poppins, sans-serif; font-size: 14px; font-weight: 500">Retry step</button>
+<a href="SME-Transfer.dc.html" style="height: 42px; padding: 0 18px; border-radius: 999px; background: #0D3542; color: #E4FF1A; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; text-decoration: none">View as SME</a>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px">
+<div style="background: #FFFFFF; border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; color: #4A6670">SME</span><span style="font-size: 15px; font-weight: 600">Adebayo Imports Ltd</span><span style="font-size: 12px; color: #4A6670; font-family: 'IBM Plex Mono', monospace">SME017 · KYB VERIFIED</span></div>
+<div style="background: #FFFFFF; border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; color: #4A6670">Amount</span><span style="font-size: 15px; font-weight: 600">USD 1,000.00</span><span style="font-size: 12px; color: #4A6670">NGN 1,587,500.00 debited</span></div>
+<div style="background: #FFFFFF; border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; color: #4A6670">Routed to</span><span style="font-size: 15px; font-weight: 600">Bridge · sandbox</span><span style="font-size: 12px; color: #4A6670">USDC on Base → USD wire</span></div>
+<div style="background: #0D3542; color: #FFFFFF; border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; color: #9FB4BA">Created → completed</span><span style="font-size: 15px; font-weight: 600; color: #E4FF1A">1 min 45 s</span><span style="font-size: 12px; color: #9FB4BA">09:14:02 → 09:15:47</span></div>
+</div>
+
+<div role="tablist" aria-label="Transfer records" style="display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; background: #FFFFFF; border-radius: 999px; align-self: flex-start">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="5">
+<button type="button" role="tab" aria-selected="{{t.on}}" onClick="{{t.pick}}" style="height: 38px; padding: 0 16px; border: 0; border-radius: 999px; font-family: Poppins, sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; background: {{t.bg}}; color: {{t.fg}}">{{t.label}}</button>
+</sc-for>
+</div>
+
+<section style="background: #FFFFFF; border-radius: 20px; overflow: hidden">
+
+<sc-if value="{{isSaga}}" hint-placeholder-val="{{ true }}">
+<div style="overflow-x: auto">
+<table style="width: 100%; min-width: 820px; border-collapse: collapse; font-size: 13px">
+<thead><tr style="background: #F5F7F2; color: #4A6670; text-align: left"><th scope="col" style="padding: 12px 20px; font-weight: 500">#</th><th scope="col" style="padding: 12px; font-weight: 500">Step</th><th scope="col" style="padding: 12px; font-weight: 500">Attempt</th><th scope="col" style="padding: 12px; font-weight: 500">Started</th><th scope="col" style="padding: 12px; font-weight: 500">Ended</th><th scope="col" style="padding: 12px; font-weight: 500">Outcome</th><th scope="col" style="padding: 12px 20px; font-weight: 500">Note</th></tr></thead>
+<tbody>
+<sc-for list="{{saga}}" as="r" hint-placeholder-count="7">
+<tr><td style="padding: 12px 20px; border-bottom: 1px solid #EEF1EE; color: #4A6670">{{r.n}}</td><td style="padding: 12px; border-bottom: 1px solid #EEF1EE; font-family: 'IBM Plex Mono', monospace; font-weight: 500">{{r.step}}</td><td style="padding: 12px; border-bottom: 1px solid #EEF1EE">{{r.attempt}}</td><td style="padding: 12px; border-bottom: 1px solid #EEF1EE; font-family: 'IBM Plex Mono', monospace">{{r.start}}</td><td style="padding: 12px; border-bottom: 1px solid #EEF1EE; font-family: 'IBM Plex Mono', monospace">{{r.end}}</td><td style="padding: 12px; border-bottom: 1px solid #EEF1EE"><span style="display: inline-flex; height: 22px; align-items: center; padding: 0 8px; border-radius: 6px; background: #E4FF1A; font-family: 'IBM Plex Mono', monospace; font-size: 12px">OK</span></td><td style="padding: 12px 20px; border-bottom: 1px solid #EEF1EE; color: #4A6670">{{r.note}}</td></tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</sc-if>
+
+<sc-if value="{{isChecks}}" hint-placeholder-val="{{ false }}">
+<div style="overflow-x: auto">
+<table style="width: 100%; min-width: 720px; border-collapse: collapse; font-size: 13px">
+<thead><tr style="background: #F5F7F2; color: #4A6670; text-align: left"><th scope="col" style="padding: 12px 20px; font-weight: 500">Gate</th><th scope="col" style="padding: 12px; font-weight: 500">Result</th><th scope="col" style="padding: 12px; font-weight: 500">Rule</th><th scope="col" style="padding: 12px 20px; font-weight: 500">Detail</th></tr></thead>
+<tbody>
+<sc-for list="{{checks}}" as="r" hint-placeholder-count="5">
+<tr><td style="padding: 13px 20px; border-bottom: 1px solid #EEF1EE; font-weight: 600">{{r.gate}}</td><td style="padding: 13px 12px; border-bottom: 1px solid #EEF1EE"><span style="display: inline-flex; height: 22px; align-items: center; padding: 0 8px; border-radius: 6px; background: #E4FF1A; font-family: 'IBM Plex Mono', monospace; font-size: 12px">PASS</span></td><td style="padding: 13px 12px; border-bottom: 1px solid #EEF1EE; color: #4A6670">{{r.rule}}</td><td style="padding: 13px 20px; border-bottom: 1px solid #EEF1EE">{{r.detail}}</td></tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</sc-if>
+
+<sc-if value="{{isJournal}}" hint-placeholder-val="{{ false }}">
+<div style="overflow-x: auto">
+<table style="width: 100%; min-width: 860px; border-collapse: collapse; font-size: 13px">
+<thead><tr style="background: #F5F7F2; color: #4A6670; text-align: left"><th scope="col" style="padding: 12px 20px; font-weight: 500">Seq</th><th scope="col" style="padding: 12px; font-weight: 500">Event</th><th scope="col" style="padding: 12px; font-weight: 500">Account</th><th scope="col" style="padding: 12px; font-weight: 500; text-align: right">Debit</th><th scope="col" style="padding: 12px; font-weight: 500; text-align: right">Credit</th><th scope="col" style="padding: 12px; font-weight: 500">Ccy</th><th scope="col" style="padding: 12px 20px; font-weight: 500">Entry hash</th></tr></thead>
+<tbody>
+<sc-for list="{{journal}}" as="r" hint-placeholder-count="9">
+<tr style="background: {{r.band}}"><td style="padding: 11px 20px; border-bottom: 1px solid #EEF1EE; font-family: 'IBM Plex Mono', monospace; font-weight: 500">{{r.seq}}</td><td style="padding: 11px 12px; border-bottom: 1px solid #EEF1EE; font-family: 'IBM Plex Mono', monospace">{{r.event}}</td><td style="padding: 11px 12px; border-bottom: 1px solid #EEF1EE; font-family: 'IBM Plex Mono', monospace">{{r.acct}}</td><td style="padding: 11px 12px; border-bottom: 1px solid #EEF1EE; text-align: right">{{r.dr}}</td><td style="padding: 11px 12px; border-bottom: 1px solid #EEF1EE; text-align: right">{{r.cr}}</td><td style="padding: 11px 12px; border-bottom: 1px solid #EEF1EE">{{r.ccy}}</td><td style="padding: 11px 20px; border-bottom: 1px solid #EEF1EE; font-family: 'IBM Plex Mono', monospace; color: #4A6670">{{r.hash}}</td></tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+<div style="padding: 14px 20px; font-size: 13px; color: #4A6670">Four entries, each balanced within its currency. NGN and USD sides meet in the FX position accounts 3000 and 3100.</div>
+</sc-if>
+
+<sc-if value="{{isChain}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 22px 24px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px">
+<sc-for list="{{chain}}" as="r" hint-placeholder-count="10">
+<div style="display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid #EEF1EE; font-size: 13px"><span style="color: #4A6670">{{r.k}}</span><span style="font-family: 'IBM Plex Mono', monospace; text-align: right">{{r.v}}</span></div>
+</sc-for>
+</div>
+<div style="padding: 0 24px 20px"><a href="#" style="font-size: 13px; font-weight: 600">Open in block explorer ↗</a></div>
+</sc-if>
+
+<sc-if value="{{isPayout}}" hint-placeholder-val="{{ false }}">
+<div style="overflow-x: auto">
+<table style="width: 100%; min-width: 720px; border-collapse: collapse; font-size: 13px">
+<thead><tr style="background: #F5F7F2; color: #4A6670; text-align: left"><th scope="col" style="padding: 12px 20px; font-weight: 500">Bridge transfer field</th><th scope="col" style="padding: 12px; font-weight: 500">Value</th><th scope="col" style="padding: 12px 20px; font-weight: 500">What it means here</th></tr></thead>
+<tbody>
+<sc-for list="{{payout}}" as="r" hint-placeholder-count="3">
+<tr style="background: {{r.band}}"><td style="padding: 13px 20px; border-bottom: 1px solid #EEF1EE; font-family: 'IBM Plex Mono', monospace; font-weight: 500">{{r.name}}</td><td style="padding: 13px 12px; border-bottom: 1px solid #EEF1EE; font-family: 'IBM Plex Mono', monospace">{{r.value}}</td><td style="padding: 13px 20px; border-bottom: 1px solid #EEF1EE; color: #4A6670">{{r.meaning}}</td></tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+<div style="padding: 14px 20px; font-size: 13px; color: #4A6670">Payout leg runs through Bridge’s transfer API in sandbox (POST /v0/transfers, then GET /v0/transfers/{id} or webhooks). Field names follow Bridge’s API documentation. The SME never sees Bridge’s name.</div>
+</sc-if>
+
+</section>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1040}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'saga' };
+  }
+  renderVals() {
+    const tab = this.state.tab;
+    const defs = [['saga', 'Saga steps'], ['checks', 'Compliance checks'], ['journal', 'Journal entries'], ['chain', 'Chain transaction'], ['payout', 'Bridge payout']];
+    let band = '#FFFFFF';
+    const entries = [
+      { seq: '1042', event: 'RESERVE', ccy: 'NGN', hash: '9f2c…71ab', lines: [['2000-SME017', '1,587,500.00', ''], ['2100-SME017', '', '1,587,500.00']] },
+      { seq: '1047', event: 'CHAIN_CONFIRMED', ccy: 'USD', hash: '3a8e…0c5d', lines: [['1200', '1,000.00', ''], ['1100', '', '1,000.00']] },
+      { seq: '1051', event: 'PAYOUT_NGN', ccy: 'NGN', hash: 'c41b…e290', lines: [['2100-SME017', '1,587,500.00', ''], ['3000', '', '1,580,000.00'], ['4000', '', '7,500.00']] },
+      { seq: '1052', event: 'PAYOUT_USD', ccy: 'USD', hash: '7d05…44f8', lines: [['3100', '1,000.00', ''], ['1200', '', '1,000.00']] }
+    ];
+    const journal = [];
+    entries.forEach((e, i) => {
+      band = i % 2 === 0 ? '#FFFFFF' : '#FBFFE6';
+      e.lines.forEach((l, j) => journal.push({ seq: j === 0 ? e.seq : '', event: j === 0 ? e.event : '', hash: j === 0 ? e.hash : '', ccy: e.ccy, acct: l[0], dr: l[1], cr: l[2], band }));
+    });
+    return {
+      tabs: defs.map((d) => ({ label: d[1], on: tab === d[0], bg: tab === d[0] ? '#0D3542' : 'transparent', fg: tab === d[0] ? '#E4FF1A' : '#4A6670', pick: () => this.setState({ tab: d[0] }) })),
+      isSaga: tab === 'saga', isChecks: tab === 'checks', isJournal: tab === 'journal', isChain: tab === 'chain', isPayout: tab === 'payout',
+      saga: [
+        { n: '1', step: 'SCREEN', attempt: '1', start: '09:14:02.118', end: '09:14:02.231', note: '5 gates passed' },
+        { n: '2', step: 'RESERVE', attempt: '1', start: '09:14:02.240', end: '09:14:02.287', note: 'Entry 1042' },
+        { n: '3', step: 'MATCH', attempt: '1', start: '09:14:02.295', end: '09:14:02.344', note: 'Bridge transfer created, usdc@base → usd@wire' },
+        { n: '4', step: 'CHAIN_SEND', attempt: '1', start: '09:14:02.350', end: '09:14:03.912', note: 'Paid Bridge deposit address; hash saved before return' },
+        { n: '5', step: 'CHAIN_CONFIRM', attempt: '2', start: '09:14:03.920', end: '09:15:14.006', note: 'Attempt 1 timed out waiting for receipt' },
+        { n: '6', step: 'PAYOUT', attempt: '1', start: '09:15:14.020', end: '09:15:47.551', note: 'Bridge state payment_processed (webhook)' },
+        { n: '7', step: 'FINALISE', attempt: '1', start: '09:15:47.560', end: '09:15:47.618', note: 'Entries 1051, 1052 · webhook 200' }
+      ],
+      checks: [
+        { gate: 'KYB', rule: 'kyb_status = VERIFIED', detail: 'Verified 02 Nov by ops@hsg.test' },
+        { gate: 'Sanctions', rule: 'Name and country vs watchlist', detail: '0 matches across 20 entries' },
+        { gate: 'Travel Rule', rule: 'Originator and beneficiary complete', detail: 'Name, account, address present on both sides' },
+        { gate: 'Threshold', rule: 'Single transfer ≤ USD 10,000', detail: 'USD 1,000.00' },
+        { gate: 'Velocity', rule: '≤ 5 transfers per SME in 10 min', detail: '1 in window' }
+      ],
+      journal,
+      chain: [
+        { k: 'Network', v: 'EVM test network' }, { k: 'Token', v: 'MockUSD · 6 decimals' },
+        { k: 'From', v: 'TW-03 0x7a3f…c21e' }, { k: 'To', v: 'Bridge deposit 0x19be…44d0' },
+        { k: 'Amount', v: '1,000.000000' }, { k: 'Tx hash', v: '0x5c2e…9a41' },
+        { k: 'Nonce', v: '318' }, { k: 'Block', v: '7,412,883' },
+        { k: 'Gas used', v: '51,284' }, { k: 'Confirmed', v: '09:15:13 UTC+1' }
+      ],
+      payout: [
+        { name: 'id', value: 'transfer_sbx_9c41…e07a', meaning: 'Created by MATCH with our transfer id as Idempotency-Key', band: '#FFFFFF' },
+        { name: 'on_behalf_of', value: 'cust_sme017', meaning: 'Bridge customer record for this SME', band: '#FFFFFF' },
+        { name: 'source', value: 'usdc @ base', meaning: 'Stablecoin and chain the gateway deposits from', band: '#FFFFFF' },
+        { name: 'destination', value: 'usd @ wire → ext_acc_77f2…', meaning: 'Beneficiary bank account registered with Bridge', band: '#FFFFFF' },
+        { name: 'destination.amount', value: '1000.00', meaning: 'Fixed output: exactly this amount arrives', band: '#FFFFFF' },
+        { name: 'source_deposit_instructions.to_address', value: '0x19be…44d0', meaning: 'Where CHAIN_SEND paid the USDC', band: '#FFFFFF' },
+        { name: 'state', value: 'payment_processed', meaning: 'Delivered; FINALISE may post the payout entries', band: '#F7FFCC' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

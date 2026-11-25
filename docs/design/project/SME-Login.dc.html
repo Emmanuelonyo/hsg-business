@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sign in</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0D3542}a:hover{color:#08252E}
+</style>
+</helmet>
+<div style="min-height: 900px; display: flex; flex-wrap: wrap; background: #F5F7F2; font-family: Poppins, system-ui, sans-serif; color: #0D3542; font-variant-numeric: tabular-nums">
+
+<div style="flex: 1 1 420px; background: #E4FF1A; padding: 48px 56px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; position: relative; overflow: hidden">
+<svg width="420" height="420" viewBox="0 0 420 420" aria-hidden="true" style="position: absolute; right: -110px; top: -110px"><path d="M30 420 A390 390 0 0 1 420 30" fill="none" stroke="#F1FF99" style="stroke-width: 64"></path><path d="M150 420 A270 270 0 0 1 420 150" fill="none" stroke="#F1FF99" style="stroke-width: 64"></path></svg>
+<div style="display: flex; align-items: center; gap: 12px; position: relative">
+<svg width="36" height="36" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#0D3542"></rect><g fill="#E4FF1A"><rect x="21" y="9" width="6" height="30" rx="3"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(45 24 24)"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(90 24 24)"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(135 24 24)"></rect></g></svg>
+<span style="font-weight: 600; font-size: 18px">HSG Business</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 20px; max-width: 540px; position: relative">
+<h1 style="margin: 0; font-size: 52px; line-height: 60px; font-weight: 500; letter-spacing: -0.02em">Pay suppliers abroad from your naira account.</h1>
+<p style="margin: 0; font-size: 16px; line-height: 26px; color: #1E4A58">Fund by bank transfer, lock a rate for 60 seconds, and track every payment to delivery. One account, one statement, no new tools for your finance team.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; position: relative; max-width: 460px">
+<div style="background: #0D3542; color: #FFFFFF; border-radius: 999px; padding: 10px 22px 10px 10px; display: flex; align-items: center; gap: 14px"><span style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 999px; background: #E4FF1A; color: #0D3542; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600">01</span><span style="font-size: 14px; line-height: 20px">Your own naira account number</span></div>
+<div style="background: #0D3542; color: #FFFFFF; border-radius: 999px; padding: 10px 22px 10px 10px; display: flex; align-items: center; gap: 14px"><span style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 999px; background: #E4FF1A; color: #0D3542; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600">02</span><span style="font-size: 14px; line-height: 20px">Rate, fee and total before you confirm</span></div>
+<div style="background: #0D3542; color: #FFFFFF; border-radius: 999px; padding: 10px 22px 10px 10px; display: flex; align-items: center; gap: 14px"><span style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 999px; background: #E4FF1A; color: #0D3542; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600">03</span><span style="font-size: 14px; line-height: 20px">If it can’t be delivered, your naira comes back</span></div>
+</div>
+</div>
+
+<div style="flex: 999 1 560px; min-width: 0; display: flex; align-items: center; justify-content: center; padding: 56px 24px; box-sizing: border-box">
+<div style="width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 26px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h2 style="margin: 0; font-size: 30px; font-weight: 500">Sign in</h2>
+<p style="margin: 0; font-size: 15px; color: #4A6670">Use the email your business registered with.</p>
+</div>
+
+<sc-if value="{{showError}}" hint-placeholder-val="{{ false }}">
+<div role="alert" style="display: flex; gap: 10px; padding: 12px 16px; border-radius: 14px; background: #FEF3F2; border: 1px solid #FECDCA; color: #B42318; font-size: 14px; line-height: 20px">
+<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" style="flex-shrink: 0"><circle cx="10" cy="10" r="8" fill="none" stroke="#B42318" style="stroke-width: 1.6"></circle><path d="M10 6v5M10 14h.01" fill="none" stroke="#B42318" style="stroke-width: 1.8; stroke-linecap: round"></path></svg>
+<span>That email and password don’t match. Check both and try again.</span>
+</div>
+</sc-if>
+
+<form style="display: flex; flex-direction: column; gap: 18px" onSubmit="{{submit}}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="email" style="font-size: 14px; font-weight: 500">Work email</label>
+<input id="email" type="email" autocomplete="username" value="{{email}}" onChange="{{onEmail}}" style="height: 52px; border: 1.5px solid #C4CFCC; border-radius: 14px; padding: 0 16px; font-family: Poppins, sans-serif; font-size: 15px; color: #0D3542; background: #FFFFFF" />
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><label for="password" style="font-size: 14px; font-weight: 500">Password</label><a href="#" style="font-size: 14px; font-weight: 500">Forgot password?</a></div>
+<input id="password" type="password" autocomplete="current-password" value="{{password}}" onChange="{{onPassword}}" style="height: 52px; border: 1.5px solid #C4CFCC; border-radius: 14px; padding: 0 16px; font-family: Poppins, sans-serif; font-size: 15px; color: #0D3542; background: #FFFFFF" />
+</div>
+<a href="SME-Dashboard.dc.html" style="height: 52px; border-radius: 999px; background: #0D3542; color: #E4FF1A; font-size: 15px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none">Sign in<svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5" fill="none" stroke="#E4FF1A" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"></path></svg></a>
+</form>
+
+<div style="display: flex; gap: 12px; padding: 16px 18px; border-radius: 18px; background: #FFFFFF; font-size: 14px; line-height: 21px; color: #4A6670">
+<svg width="22" height="22" viewBox="0 0 48 48" aria-hidden="true" style="flex-shrink: 0"><path d="M24 0C25.5 15 33 22.5 48 24C33 25.5 25.5 33 24 48C22.5 33 15 25.5 0 24C15 22.5 22.5 15 24 0Z" fill="#0D3542"></path></svg>
+<span>New business? Accounts open after we verify your company documents, usually within one working day.</span>
+</div>
+
+<div style="border-top: 1px solid #DDE3E1; padding-top: 18px; font-size: 14px; color: #4A6670">Gateway staff: <a href="Ops-Transfer.dc.html" style="font-weight: 600">operator sign-in</a></div>
+</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"showError":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { email: 'funmi@adebayoimports.ng', password: 'demo-password' };
+  }
+  renderVals() {
+    return {
+      showError: this.props.showError ?? false,
+      email: this.state.email,
+      password: this.state.password,
+      onEmail: (e) => this.setState({ email: e.target.value }),
+      onPassword: (e) => this.setState({ password: e.target.value }),
+      submit: (e) => { e.preventDefault(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

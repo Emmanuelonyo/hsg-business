@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Operator: review queue</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0D3542}a:hover{color:#08252E}
+</style>
+</helmet>
+<div style="min-height: 960px; display: flex; flex-wrap: wrap; background: #F5F7F2; font-family: Poppins, system-ui, sans-serif; color: #0D3542; font-variant-numeric: tabular-nums">
+
+<nav aria-label="Console" style="flex: 1 1 220px; max-width: 100%; background: #08252E; padding: 28px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; align-items: center; gap: 10px; padding: 0 8px">
+<svg width="32" height="32" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#E4FF1A"></rect><g fill="#08252E"><rect x="21" y="9" width="6" height="30" rx="3"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(45 24 24)"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(90 24 24)"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(135 24 24)"></rect></g></svg>
+<div style="display: flex; flex-direction: column"><span style="font-weight: 600; font-size: 15px; color: #FFFFFF">HSG Console</span><span style="font-size: 11px; color: #9FB4BA; letter-spacing: 0.06em; text-transform: uppercase">Operator</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<a href="Ops-Transfer.dc.html" style="display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 14px; border-radius: 999px; color: #D5E0E3; font-size: 14px; font-weight: 500; text-decoration: none"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 6h12M4 10h12M4 14h8" fill="none" stroke="currentColor" style="stroke-width: 1.7; stroke-linecap: round"></path></svg>Transfers</a>
+<a href="Ops-Review.dc.html" aria-current="page" style="display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 14px; border-radius: 999px; background: #E4FF1A; color: #08252E; font-size: 14px; font-weight: 600; text-decoration: none"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5l6 2.5v4.5c0 3.8-2.6 6.6-6 8-3.4-1.4-6-4.2-6-8V5z" fill="none" stroke="currentColor" style="stroke-width: 1.7; stroke-linejoin: round"></path></svg>Review queue<span style="margin-left: auto; min-width: 22px; height: 22px; border-radius: 999px; background: #08252E; color: #E4FF1A; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center">{{pendingCount}}</span></a>
+<a href="Ops-Ledger.dc.html" style="display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 14px; border-radius: 999px; color: #D5E0E3; font-size: 14px; font-weight: 500; text-decoration: none"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.5h10a1 1 0 0 1 1 1v12l-2.5-1.5L11 16.5 8.5 15 6 16.5 4 15V4.5a1 1 0 0 1 1-1zM7 7.5h6M7 10.5h6" fill="none" stroke="currentColor" style="stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round"></path></svg>Ledger</a>
+<a href="Ops-Simulator.dc.html" style="display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 14px; border-radius: 999px; color: #D5E0E3; font-size: 14px; font-weight: 500; text-decoration: none"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 6h7M15 6h1M4 14h1M9 14h7" fill="none" stroke="currentColor" style="stroke-width: 1.7; stroke-linecap: round"></path><circle cx="13" cy="6" r="2" fill="none" stroke="currentColor" style="stroke-width: 1.7"></circle><circle cx="7" cy="14" r="2" fill="none" stroke="currentColor" style="stroke-width: 1.7"></circle></svg>Simulator</a>
+</div>
+<div style="margin-top: auto; padding: 14px 10px 0; border-top: 1px solid #1B3F4A; font-size: 12px; line-height: 18px; color: #9FB4BA">Test network · simulated bank and providers<br/>Signed in as ops@hsg.test</div>
+</nav>
+
+<main style="flex: 999 1 560px; min-width: 0; padding: 30px 36px 48px; box-sizing: border-box">
+<div style="max-width: 1160px; display: flex; flex-direction: column; gap: 20px">
+
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-size: 28px; font-weight: 500">Review queue</h1>
+<p style="margin: 0; font-size: 14px; color: #4A6670">Transfers parked by a monitoring rule, and businesses waiting for KYB. Every decision is written to the audit log.</p>
+</div>
+<div role="tablist" aria-label="Queues" style="display: flex; gap: 6px; padding: 6px; background: #FFFFFF; border-radius: 999px">
+<button type="button" role="tab" aria-selected="{{isHeld}}" onClick="{{showHeld}}" style="height: 38px; padding: 0 16px; border: 0; border-radius: 999px; font-family: Poppins, sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; background: {{heldBg}}; color: {{heldFg}}">Held transfers · {{pendingCount}}</button>
+<button type="button" role="tab" aria-selected="{{isKyb}}" onClick="{{showKyb}}" style="height: 38px; padding: 0 16px; border: 0; border-radius: 999px; font-family: Poppins, sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; background: {{kybBg}}; color: {{kybFg}}">KYB pending · 2</button>
+</div>
+</div>
+
+<sc-if value="{{isHeld}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+
+<div style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{items}}" as="it" hint-placeholder-count="2">
+<button type="button" onClick="{{it.pick}}" aria-pressed="{{it.on}}" style="text-align: left; font-family: Poppins, sans-serif; cursor: pointer; padding: 16px 18px; border-radius: 18px; display: flex; flex-direction: column; gap: 6px; background: {{it.bg}}; color: {{it.fg}}; border: 2px solid {{it.bd}}">
+<span style="display: flex; justify-content: space-between; gap: 12px; width: 100%"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">{{it.ref}}</span><span style="font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 6px; background: {{it.tagBg}}; color: {{it.tagFg}}">{{it.rule}}</span></span>
+<span style="font-size: 15px; font-weight: 600">{{it.usd}} → {{it.ben}}</span>
+<span style="font-size: 13px; opacity: 0.8">{{it.sme}} · held {{it.age}}</span>
+</button>
+</sc-for>
+<sc-if value="{{empty}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 28px; border-radius: 18px; background: #E4FF1A; display: flex; flex-direction: column; gap: 6px; align-items: flex-start"><svg width="36" height="36" viewBox="0 0 48 48" aria-hidden="true"><g fill="#0D3542"><rect x="20" y="2" width="8" height="44" rx="4"></rect><rect x="20" y="2" width="8" height="44" rx="4" transform="rotate(45 24 24)"></rect><rect x="20" y="2" width="8" height="44" rx="4" transform="rotate(90 24 24)"></rect><rect x="20" y="2" width="8" height="44" rx="4" transform="rotate(135 24 24)"></rect></g></svg><span style="font-size: 16px; font-weight: 600">Queue clear</span><span style="font-size: 13px">Nothing waiting for a decision.</span></div>
+</sc-if>
+</div>
+
+<sc-if value="{{hasSel}}" hint-placeholder-val="{{ true }}">
+<section style="flex: 1.6 1 460px; background: #FFFFFF; border-radius: 22px; overflow: hidden">
+<div style="background: #0D3542; color: #FFFFFF; padding: 22px 24px; display: flex; flex-direction: column; gap: 6px; position: relative; overflow: hidden">
+<svg width="150" height="150" viewBox="0 0 150 150" aria-hidden="true" style="position: absolute; right: -30px; bottom: -60px"><path d="M14 150 A136 136 0 0 1 150 14" fill="none" stroke="#1E4A58" style="stroke-width: 28"></path></svg>
+<span style="font-size: 12px; font-weight: 600; color: #E4FF1A; text-transform: uppercase; letter-spacing: 0.08em; position: relative">{{sel.ruleLong}}</span>
+<span style="font-size: 22px; font-weight: 500; position: relative">{{sel.usd}} to {{sel.ben}}</span>
+<span style="font-size: 13px; color: #C9D6DA; position: relative">{{sel.why}}</span>
+</div>
+<div style="padding: 20px 24px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 12px; font-weight: 600; color: #4A6670; text-transform: uppercase; letter-spacing: 0.08em">Originator</span>
+<span style="font-size: 14px; font-weight: 600">{{sel.sme}}</span>
+<span style="font-size: 13px; color: #4A6670">{{sel.origAddr}}</span>
+<span style="font-size: 13px; font-family: 'IBM Plex Mono', monospace">{{sel.origAcct}}</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 12px; font-weight: 600; color: #4A6670; text-transform: uppercase; letter-spacing: 0.08em">Beneficiary</span>
+<span style="font-size: 14px; font-weight: 600">{{sel.ben}}</span>
+<span style="font-size: 13px; color: #4A6670">{{sel.benAddr}}</span>
+<span style="font-size: 13px; font-family: 'IBM Plex Mono', monospace">{{sel.benAcct}}</span>
+</div>
+</div>
+<div style="padding: 0 24px 22px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<span style="font-size: 12px; padding: 4px 10px; border-radius: 999px; background: #E4FF1A">KYB PASS</span>
+<span style="font-size: 12px; padding: 4px 10px; border-radius: 999px; background: #E4FF1A">Sanctions PASS</span>
+<span style="font-size: 12px; padding: 4px 10px; border-radius: 999px; background: #E4FF1A">Travel Rule PASS</span>
+<span style="font-size: 12px; padding: 4px 10px; border-radius: 999px; background: #FEF3E2; color: #93370D; font-weight: 600">{{sel.rule}} HELD</span>
+</div>
+<label for="reason" style="font-size: 14px; font-weight: 500">Decision note</label>
+<textarea id="reason" rows="3" value="{{note}}" onChange="{{onNote}}" style="border: 1.5px solid #C4CFCC; border-radius: 14px; padding: 12px 14px; font-family: Poppins, sans-serif; font-size: 14px; color: #0D3542; resize: vertical"></textarea>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<button type="button" onClick="{{approve}}" style="flex-grow: 1; height: 50px; border: 0; border-radius: 999px; background: #0D3542; color: #E4FF1A; font-family: Poppins, sans-serif; font-size: 15px; font-weight: 600; cursor: pointer">Approve and release</button>
+<button type="button" onClick="{{reject}}" style="height: 50px; padding: 0 22px; border: 1.5px solid #B42318; border-radius: 999px; background: #FFFFFF; color: #B42318; font-family: Poppins, sans-serif; font-size: 15px; font-weight: 600; cursor: pointer">Reject</button>
+</div>
+</div>
+</section>
+</sc-if>
+</div>
+
+<sc-if value="{{hasFlash}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="padding: 14px 18px; border-radius: 16px; background: #0D3542; color: #FFFFFF; font-size: 14px"><span style="color: #E4FF1A; font-weight: 600">Recorded.</span> {{flash}}</div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{isKyb}}" hint-placeholder-val="{{ false }}">
+<section style="background: #FFFFFF; border-radius: 22px; overflow: hidden">
+<div style="overflow-x: auto">
+<table style="width: 100%; min-width: 760px; border-collapse: collapse; font-size: 13px">
+<thead><tr style="background: #F5F7F2; color: #4A6670; text-align: left"><th scope="col" style="padding: 12px 20px; font-weight: 500">Business</th><th scope="col" style="padding: 12px; font-weight: 500">RC number</th><th scope="col" style="padding: 12px; font-weight: 500">Documents</th><th scope="col" style="padding: 12px; font-weight: 500">Screening</th><th scope="col" style="padding: 12px 20px; font-weight: 500">Action</th></tr></thead>
+<tbody>
+<tr><td style="padding: 14px 20px; border-bottom: 1px solid #EEF1EE; font-weight: 600">Tunde Electricals Ltd<div style="font-weight: 400; color: #4A6670">Ibadan</div></td><td style="padding: 14px 12px; border-bottom: 1px solid #EEF1EE; font-family: 'IBM Plex Mono', monospace">RC-7743012</td><td style="padding: 14px 12px; border-bottom: 1px solid #EEF1EE">CAC, director ID, utility bill</td><td style="padding: 14px 12px; border-bottom: 1px solid #EEF1EE"><span style="padding: 3px 10px; border-radius: 999px; background: #E4FF1A; font-size: 12px">No match</span></td><td style="padding: 14px 20px; border-bottom: 1px solid #EEF1EE"><button type="button" style="height: 36px; padding: 0 16px; border: 0; border-radius: 999px; background: #0D3542; color: #E4FF1A; font-family: Poppins, sans-serif; font-size: 13px; font-weight: 600; cursor: pointer">Approve</button></td></tr>
+<tr><td style="padding: 14px 20px; border-bottom: 1px solid #EEF1EE; font-weight: 600">Northgate Commodities Ltd<div style="font-weight: 400; color: #4A6670">Kano</div></td><td style="padding: 14px 12px; border-bottom: 1px solid #EEF1EE; font-family: 'IBM Plex Mono', monospace">RC-6619045</td><td style="padding: 14px 12px; border-bottom: 1px solid #EEF1EE">CAC, director ID</td><td style="padding: 14px 12px; border-bottom: 1px solid #EEF1EE"><span style="padding: 3px 10px; border-radius: 999px; border: 1px solid #B42318; color: #B42318; font-size: 12px; font-weight: 600">Watchlist match</span></td><td style="padding: 14px 20px; border-bottom: 1px solid #EEF1EE"><button type="button" style="height: 36px; padding: 0 16px; border: 1.5px solid #B42318; border-radius: 999px; background: #FFFFFF; color: #B42318; font-family: Poppins, sans-serif; font-size: 13px; font-weight: 600; cursor: pointer">Block</button></td></tr>
+</tbody>
+</table>
+</div>
+<div style="padding: 14px 20px; font-size: 13px; color: #4A6670">These two rows are the seed data behind test cases TC01 (clean KYB) and TC02 (KYB fails screening).</div>
+</section>
+</sc-if>
+
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":960}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'held', sel: 'h1', done: [], note: '', flash: '' };
+  }
+  renderVals() {
+    const all = [
+      { id: 'h1', ref: 'HSG-20261118-000109', rule: 'Threshold', ruleLong: 'Threshold rule · over USD 10,000', usd: 'USD 12,000.00', ben: 'Al Noor Trading LLC', sme: 'Adebayo Imports Ltd', age: '2 h 14 min',
+        why: 'Single transfer of USD 12,000.00 exceeds the USD 10,000.00 review threshold.',
+        origAddr: '14 Creek Road, Apapa, Lagos', origAcct: 'VA 9920417362', benAddr: 'Office 1207, Al Saqr Tower, Dubai, UAE', benAcct: 'AE07 0331 ····2210' },
+      { id: 'h2', ref: 'HSG-20261123-000147', rule: 'Velocity', ruleLong: 'Velocity rule · 6 transfers in 10 min', usd: 'USD 900.00', ben: 'Mersin Seed Trading', sme: 'Okafor Agro Exports Ltd', age: '6 min',
+        why: 'Sixth transfer from this business inside 10 minutes. The limit is five.',
+        origAddr: '3 Old Market Road, Onitsha', origAcct: 'VA 9920418805', benAddr: 'Mezitli District, Mersin, Türkiye', benAcct: 'TR44 0006 ····9183' }
+    ];
+    const open = all.filter((x) => this.state.done.indexOf(x.id) === -1);
+    const selId = open.some((x) => x.id === this.state.sel) ? this.state.sel : (open[0] ? open[0].id : null);
+    const sel = open.find((x) => x.id === selId) || all[0];
+    const decide = (verb) => () => {
+      if (!selId) return;
+      this.setState({ done: this.state.done.concat([selId]), note: '', flash: sel.ref + ' ' + verb + ' by ops@hsg.test.' });
+    };
+    const isHeld = this.state.tab === 'held';
+    return {
+      isHeld, isKyb: !isHeld,
+      heldBg: isHeld ? '#0D3542' : 'transparent', heldFg: isHeld ? '#E4FF1A' : '#4A6670',
+      kybBg: !isHeld ? '#0D3542' : 'transparent', kybFg: !isHeld ? '#E4FF1A' : '#4A6670',
+      showHeld: () => this.setState({ tab: 'held' }), showKyb: () => this.setState({ tab: 'kyb' }),
+      pendingCount: String(open.length),
+      items: open.map((x) => {
+        const on = x.id === selId;
+        return { ...x, on, bg: on ? '#0D3542' : '#FFFFFF', fg: on ? '#FFFFFF' : '#0D3542', bd: on ? '#0D3542' : '#FFFFFF',
+          tagBg: on ? '#E4FF1A' : '#FEF3E2', tagFg: on ? '#0D3542' : '#93370D', pick: () => this.setState({ sel: x.id }) };
+      }),
+      empty: open.length === 0, hasSel: open.length > 0, sel,
+      note: this.state.note, onNote: (e) => this.setState({ note: e.target.value }),
+      approve: decide('approved and released to RESERVE'),
+      reject: decide('rejected; transfer DECLINED, no money moved'),
+      hasFlash: !!this.state.flash, flash: this.state.flash
+    };
+  }
+}
+</script>
+</body>
+</html>

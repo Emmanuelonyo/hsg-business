@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Add funds</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0D3542}a:hover{color:#08252E}
+</style>
+</helmet>
+<div style="min-height: 1000px; display: flex; flex-wrap: wrap; background: #F5F7F2; font-family: Poppins, system-ui, sans-serif; color: #0D3542; font-variant-numeric: tabular-nums">
+
+<nav aria-label="Main" style="flex: 1 1 240px; max-width: 100%; background: #0D3542; padding: 28px 16px; box-sizing: border-box; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; align-items: center; gap: 10px; padding: 0 8px">
+<svg width="32" height="32" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#E4FF1A"></rect><g fill="#0D3542"><rect x="21" y="9" width="6" height="30" rx="3"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(45 24 24)"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(90 24 24)"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(135 24 24)"></rect></g></svg>
+<span style="font-weight: 600; font-size: 16px; color: #FFFFFF">HSG Business</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<a href="SME-Dashboard.dc.html" style="display: flex; align-items: center; gap: 12px; height: 46px; padding: 0 16px; border-radius: 999px; color: #D5E0E3; font-size: 15px; font-weight: 500; text-decoration: none"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 9L10 3.5 16.5 9V16a1 1 0 0 1-1 1h-3.5v-5h-4v5H4.5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" style="stroke-width: 1.7; stroke-linejoin: round"></path></svg>Home</a>
+<a href="SME-Send.dc.html" style="display: flex; align-items: center; gap: 12px; height: 46px; padding: 0 16px; border-radius: 999px; color: #D5E0E3; font-size: 15px; font-weight: 500; text-decoration: none"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 15.5L15.5 4.5M8 4.5h7.5V12" fill="none" stroke="currentColor" style="stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round"></path></svg>Send payment</a>
+<a href="SME-Funds.dc.html" aria-current="page" style="display: flex; align-items: center; gap: 12px; height: 46px; padding: 0 16px; border-radius: 999px; background: #E4FF1A; color: #0D3542; font-size: 15px; font-weight: 600; text-decoration: none"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M15.5 4.5L4.5 15.5M12 15.5H4.5V8" fill="none" stroke="currentColor" style="stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round"></path></svg>Add funds</a>
+<a href="SME-Transfers.dc.html" style="display: flex; align-items: center; gap: 12px; height: 46px; padding: 0 16px; border-radius: 999px; color: #D5E0E3; font-size: 15px; font-weight: 500; text-decoration: none"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 6h12M4 10h12M4 14h8" fill="none" stroke="currentColor" style="stroke-width: 1.7; stroke-linecap: round"></path></svg>Transfers</a>
+<a href="SME-Beneficiaries.dc.html" style="display: flex; align-items: center; gap: 12px; height: 46px; padding: 0 16px; border-radius: 999px; color: #D5E0E3; font-size: 15px; font-weight: 500; text-decoration: none"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="7" r="3" fill="none" stroke="currentColor" style="stroke-width: 1.7"></circle><path d="M2.5 16.5c.8-2.6 2.9-4 5.5-4s4.7 1.4 5.5 4M13 4.2a3 3 0 0 1 0 5.6M15 12.6c1.3.7 2.1 2 2.5 3.9" fill="none" stroke="currentColor" style="stroke-width: 1.7; stroke-linecap: round"></path></svg>Beneficiaries</a>
+</div>
+<div style="margin-top: auto; display: flex; align-items: center; gap: 10px; padding: 14px 8px 0; border-top: 1px solid #1E4A58">
+<div style="width: 38px; height: 38px; border-radius: 999px; background: #E4FF1A; color: #0D3542; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600">FA</div>
+<div style="display: flex; flex-direction: column; min-width: 0; flex-grow: 1"><span style="font-size: 14px; font-weight: 600; color: #FFFFFF">Funmi Adebayo</span><span style="font-size: 12px; color: #B5C6CB">Adebayo Imports Ltd</span></div>
+<a href="SME-Login.dc.html" aria-label="Sign out" style="color: #D5E0E3; display: flex"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M8 4H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3M12 13.5L15.5 10 12 6.5M15.5 10H8" fill="none" stroke="currentColor" style="stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round"></path></svg></a>
+</div>
+</nav>
+
+<main style="flex: 999 1 560px; min-width: 0; padding: 36px 40px 48px; box-sizing: border-box">
+<div style="max-width: 1120px; display: flex; flex-direction: column; gap: 24px">
+
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-size: 30px; font-weight: 500; letter-spacing: -0.01em">Add funds</h1>
+<p style="margin: 0; font-size: 14px; color: #4A6670">Send naira from any Nigerian bank app to your business account below. It arrives in seconds.</p>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px">
+<section style="flex: 1.5 1 420px; background: #0D3542; color: #FFFFFF; border-radius: 28px; padding: 32px; display: flex; flex-direction: column; gap: 22px; position: relative; overflow: hidden">
+<svg width="280" height="280" viewBox="0 0 280 280" aria-hidden="true" style="position: absolute; right: -60px; bottom: -60px"><path d="M24 280 A256 256 0 0 1 280 24" fill="none" stroke="#1E4A58" style="stroke-width: 48"></path><path d="M126 280 A154 154 0 0 1 280 126" fill="none" stroke="#E4FF1A" style="stroke-width: 48"></path></svg>
+<span style="align-self: flex-start; background: #E4FF1A; color: #0D3542; font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 999px; position: relative">Your business account · NGN</span>
+<div style="display: flex; flex-direction: column; gap: 4px; position: relative">
+<span style="font-size: 13px; color: #C9D6DA">Account number</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 44px; font-weight: 500; letter-spacing: 0.06em">9920 417 362</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 520px; position: relative">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 13px; color: #C9D6DA">Bank</span><span style="font-size: 16px; font-weight: 500">Sandbox Partner Bank</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 13px; color: #C9D6DA">Account name</span><span style="font-size: 16px; font-weight: 500">HSG / Adebayo Imports Ltd</span></div>
+</div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap; position: relative">
+<button type="button" onClick="{{copy}}" style="height: 48px; padding: 0 22px; border: 0; border-radius: 999px; background: #E4FF1A; color: #0D3542; font-family: Poppins, sans-serif; font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; cursor: pointer"><svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9" height="9" rx="2" fill="none" stroke="currentColor" style="stroke-width: 1.8"></rect><path d="M13 7V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h2" fill="none" stroke="currentColor" style="stroke-width: 1.8"></path></svg>{{copyLabel}}</button>
+<button type="button" style="height: 48px; padding: 0 22px; border: 1.5px solid #4A7684; border-radius: 999px; background: transparent; color: #FFFFFF; font-family: Poppins, sans-serif; font-size: 15px; font-weight: 500; cursor: pointer">Share details</button>
+</div>
+</section>
+
+<section style="flex: 1 1 300px; display: flex; flex-direction: column; gap: 12px">
+<div style="background: #E4FF1A; border-radius: 22px; padding: 20px 22px; display: flex; gap: 16px; align-items: flex-start"><span style="font-size: 28px; font-weight: 500; line-height: 32px">01</span><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 600">Transfer from your bank app</span><span style="font-size: 13px; line-height: 20px; color: #1E4A58">Any Nigerian bank, any amount, by instant transfer.</span></div></div>
+<div style="background: #FFFFFF; border-radius: 22px; padding: 20px 22px; display: flex; gap: 16px; align-items: flex-start"><span style="font-size: 28px; font-weight: 500; line-height: 32px">02</span><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 600">We credit you in seconds</span><span style="font-size: 13px; line-height: 20px; color: #4A6670">You get an email and it shows below with the bank’s reference.</span></div></div>
+<div style="background: #FFFFFF; border-radius: 22px; padding: 20px 22px; display: flex; gap: 16px; align-items: flex-start"><span style="font-size: 28px; font-weight: 500; line-height: 32px">03</span><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 600">Send it abroad</span><span style="font-size: 13px; line-height: 20px; color: #4A6670">Your available balance is ready for your next payment.</span></div></div>
+</section>
+</div>
+
+<div style="display: flex; gap: 12px; padding: 14px 18px; border-radius: 18px; background: #FFFFFF; font-size: 13px; line-height: 20px; color: #4A6670; align-items: center">
+<svg width="22" height="22" viewBox="0 0 48 48" aria-hidden="true" style="flex-shrink: 0"><path d="M24 0C25.5 15 33 22.5 48 24C33 25.5 25.5 33 24 48C22.5 33 15 25.5 0 24C15 22.5 22.5 15 24 0Z" fill="#0D3542"></path></svg>
+<span>This account accepts naira only. Receiving payments from customers abroad is not available yet.</span>
+</div>
+
+<section style="background: #FFFFFF; border-radius: 24px; overflow: hidden">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 22px 28px"><h2 style="margin: 0; font-size: 18px; font-weight: 500">Money in</h2><span style="font-size: 13px; color: #4A6670">Last 30 days · NGN 31,500,000.00</span></div>
+<div style="overflow-x: auto">
+<table style="width: 100%; min-width: 760px; border-collapse: collapse; font-size: 14px">
+<thead><tr style="background: #F5F7F2; color: #4A6670; text-align: left"><th scope="col" style="padding: 12px 28px; font-weight: 500; font-size: 13px">Date</th><th scope="col" style="padding: 12px 16px; font-weight: 500; font-size: 13px">From</th><th scope="col" style="padding: 12px 16px; font-weight: 500; font-size: 13px">Bank reference</th><th scope="col" style="padding: 12px 16px; font-weight: 500; font-size: 13px; text-align: right">Amount</th><th scope="col" style="padding: 12px 28px; font-weight: 500; font-size: 13px">Status</th></tr></thead>
+<tbody>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="5">
+<tr><td style="padding: 15px 28px; border-bottom: 1px solid #EEF1EE; color: #4A6670; white-space: nowrap">{{r.date}}</td><td style="padding: 15px 16px; border-bottom: 1px solid #EEF1EE"><div style="font-weight: 500">{{r.from}}</div><div style="font-size: 13px; color: #4A6670">{{r.bank}}</div></td><td style="padding: 15px 16px; border-bottom: 1px solid #EEF1EE; font-family: 'IBM Plex Mono', monospace; font-size: 13px">{{r.ref}}</td><td style="padding: 15px 16px; border-bottom: 1px solid #EEF1EE; text-align: right; font-weight: 600; white-space: nowrap">{{r.amt}}</td><td style="padding: 15px 28px; border-bottom: 1px solid #EEF1EE"><span style="display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px; background: #E4FF1A; font-size: 13px; font-weight: 600">Credited</span></td></tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { copied: false };
+  }
+  componentWillUnmount() { clearTimeout(this.t); }
+  renderVals() {
+    return {
+      copyLabel: this.state.copied ? 'Copied' : 'Copy account number',
+      copy: () => {
+        try { navigator.clipboard && navigator.clipboard.writeText('9920417362'); } catch (e) {}
+        this.setState({ copied: true });
+        clearTimeout(this.t);
+        this.t = setTimeout(() => this.setState({ copied: false }), 1600);
+      },
+      rows: [
+        { date: '23 Nov, 09:15', from: 'Adebayo Imports Ltd', bank: 'Sandbox Bank A', ref: '000013261123091502884210473', amt: 'NGN 5,000,000.00' },
+        { date: '20 Nov, 14:41', from: 'Adebayo Imports Ltd', bank: 'Sandbox Bank A', ref: '000013261120144109882099612', amt: 'NGN 12,000,000.00' },
+        { date: '17 Nov, 10:02', from: 'Funmi Adebayo', bank: 'Sandbox Bank B', ref: '000021261117100233871640098', amt: 'NGN 2,500,000.00' },
+        { date: '12 Nov, 16:20', from: 'Adebayo Imports Ltd', bank: 'Sandbox Bank A', ref: '000013261112162047869310527', amt: 'NGN 8,000,000.00' },
+        { date: '04 Nov, 11:37', from: 'Adebayo Imports Ltd', bank: 'Sandbox Bank A', ref: '000013261104113752861002345', amt: 'NGN 4,000,000.00' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Transfer detail</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0D3542}a:hover{color:#08252E}
+</style>
+</helmet>
+<div style="min-height: 1040px; display: flex; flex-wrap: wrap; background: #F5F7F2; font-family: Poppins, system-ui, sans-serif; color: #0D3542; font-variant-numeric: tabular-nums">
+
+<nav aria-label="Main" style="flex: 1 1 240px; max-width: 100%; background: #0D3542; padding: 28px 16px; box-sizing: border-box; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; align-items: center; gap: 10px; padding: 0 8px">
+<svg width="32" height="32" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#E4FF1A"></rect><g fill="#0D3542"><rect x="21" y="9" width="6" height="30" rx="3"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(45 24 24)"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(90 24 24)"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(135 24 24)"></rect></g></svg>
+<span style="font-weight: 600; font-size: 16px; color: #FFFFFF">HSG Business</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<a href="SME-Dashboard.dc.html" style="display: flex; align-items: center; gap: 12px; height: 46px; padding: 0 16px; border-radius: 999px; color: #D5E0E3; font-size: 15px; font-weight: 500; text-decoration: none"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 9L10 3.5 16.5 9V16a1 1 0 0 1-1 1h-3.5v-5h-4v5H4.5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" style="stroke-width: 1.7; stroke-linejoin: round"></path></svg>Home</a>
+<a href="SME-Send.dc.html" style="display: flex; align-items: center; gap: 12px; height: 46px; padding: 0 16px; border-radius: 999px; color: #D5E0E3; font-size: 15px; font-weight: 500; text-decoration: none"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 15.5L15.5 4.5M8 4.5h7.5V12" fill="none" stroke="currentColor" style="stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round"></path></svg>Send payment</a>
+<a href="SME-Funds.dc.html" style="display: flex; align-items: center; gap: 12px; height: 46px; padding: 0 16px; border-radius: 999px; color: #D5E0E3; font-size: 15px; font-weight: 500; text-decoration: none"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M15.5 4.5L4.5 15.5M12 15.5H4.5V8" fill="none" stroke="currentColor" style="stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round"></path></svg>Add funds</a>
+<a href="SME-Transfers.dc.html" aria-current="page" style="display: flex; align-items: center; gap: 12px; height: 46px; padding: 0 16px; border-radius: 999px; background: #E4FF1A; color: #0D3542; font-size: 15px; font-weight: 600; text-decoration: none"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 6h12M4 10h12M4 14h8" fill="none" stroke="currentColor" style="stroke-width: 1.7; stroke-linecap: round"></path></svg>Transfers</a>
+<a href="SME-Beneficiaries.dc.html" style="display: flex; align-items: center; gap: 12px; height: 46px; padding: 0 16px; border-radius: 999px; color: #D5E0E3; font-size: 15px; font-weight: 500; text-decoration: none"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="7" r="3" fill="none" stroke="currentColor" style="stroke-width: 1.7"></circle><path d="M2.5 16.5c.8-2.6 2.9-4 5.5-4s4.7 1.4 5.5 4M13 4.2a3 3 0 0 1 0 5.6M15 12.6c1.3.7 2.1 2 2.5 3.9" fill="none" stroke="currentColor" style="stroke-width: 1.7; stroke-linecap: round"></path></svg>Beneficiaries</a>
+</div>
+<div style="margin-top: auto; display: flex; align-items: center; gap: 10px; padding: 14px 8px 0; border-top: 1px solid #1E4A58">
+<div style="width: 38px; height: 38px; border-radius: 999px; background: #E4FF1A; color: #0D3542; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600">FA</div>
+<div style="display: flex; flex-direction: column; min-width: 0; flex-grow: 1"><span style="font-size: 14px; font-weight: 600; color: #FFFFFF">Funmi Adebayo</span><span style="font-size: 12px; color: #B5C6CB">Adebayo Imports Ltd</span></div>
+<a href="SME-Login.dc.html" aria-label="Sign out" style="color: #D5E0E3; display: flex"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M8 4H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3M12 13.5L15.5 10 12 6.5M15.5 10H8" fill="none" stroke="currentColor" style="stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round"></path></svg></a>
+</div>
+</nav>
+
+<main style="flex: 999 1 560px; min-width: 0; padding: 36px 40px 48px; box-sizing: border-box">
+<div style="max-width: 1080px; display: flex; flex-direction: column; gap: 22px">
+
+<a href="SME-Transfers.dc.html" style="font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; align-self: flex-start"><svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M12 15l-5-5 5-5" fill="none" stroke="currentColor" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"></path></svg>All transfers</a>
+
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
+<h1 style="margin: 0; font-size: 28px; font-weight: 500; letter-spacing: -0.01em">USD 1,000.00 to Shenzhen Ruiqi Machinery Co.</h1>
+<span style="display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px; font-size: 13px; font-weight: 600; background: {{chipBg}}; color: {{chipFg}}; border: 1px solid {{chipBd}}">{{status}}</span>
+</div>
+<div style="font-size: 14px; color: #4A6670">Submitted 23 Nov 2026, 09:14 · <span style="font-family: 'IBM Plex Mono', monospace; color: #0D3542">HSG-20261123-000142</span></div>
+</div>
+<button type="button" style="height: 46px; padding: 0 20px; border: 1.5px solid #0D3542; border-radius: 999px; background: #FFFFFF; color: #0D3542; font-family: Poppins, sans-serif; font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; cursor: pointer"><svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10M6 9l4 4 4-4M4 16h12" fill="none" stroke="currentColor" style="stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round"></path></svg>Download receipt</button>
+</div>
+
+<div role="status" style="display: flex; align-items: center; gap: 18px; padding: 22px 26px; border-radius: 24px; background: {{bannerBg}}; position: relative; overflow: hidden">
+<svg width="160" height="160" viewBox="0 0 160 160" aria-hidden="true" style="position: absolute; right: -30px; top: -50px"><path d="M16 160 A144 144 0 0 1 160 16" fill="none" stroke="{{arcColor}}" style="stroke-width: 30"></path></svg>
+<sc-if value="{{showStar}}" hint-placeholder-val="{{ false }}"><svg width="44" height="44" viewBox="0 0 48 48" aria-hidden="true" style="flex-shrink: 0; position: relative"><g fill="#0D3542"><rect x="20" y="2" width="8" height="44" rx="4"></rect><rect x="20" y="2" width="8" height="44" rx="4" transform="rotate(45 24 24)"></rect><rect x="20" y="2" width="8" height="44" rx="4" transform="rotate(90 24 24)"></rect><rect x="20" y="2" width="8" height="44" rx="4" transform="rotate(135 24 24)"></rect></g></svg></sc-if>
+<div style="display: flex; flex-direction: column; gap: 4px; position: relative; max-width: 760px">
+<div style="font-size: 18px; font-weight: 600; color: {{bannerFg}}">{{bannerTitle}}</div>
+<div style="font-size: 14px; line-height: 22px; color: {{bannerBodyColor}}">{{bannerBody}}</div>
+</div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start">
+
+<section aria-label="Progress" style="flex: 1 1 340px; background: #FFFFFF; border-radius: 24px; padding: 26px 28px; display: flex; flex-direction: column">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px"><h2 style="margin: 0; font-size: 17px; font-weight: 600">Progress</h2><sc-if value="{{polling}}" hint-placeholder-val="{{ true }}"><span style="font-size: 12px; font-weight: 500; color: #0D3542; display: inline-flex; align-items: center; gap: 6px; background: #F1FF99; padding: 4px 10px; border-radius: 999px"><span style="width: 7px; height: 7px; border-radius: 999px; background: #0D3542"></span>Live</span></sc-if></div>
+<ol style="list-style: none; margin: 0; padding: 0">
+<sc-for list="{{timeline}}" as="s" hint-placeholder-count="4">
+<li style="display: flex; gap: 14px">
+<div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0">
+<div style="width: 28px; height: 28px; border-radius: 999px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; background: {{s.dotBg}}; border: 2px solid {{s.dotBd}}">
+<sc-if value="{{s.check}}" hint-placeholder-val="{{ true }}"><svg width="13" height="13" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2l2.2 2.2 4.8-4.8" fill="none" stroke="#E4FF1A" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"></path></svg></sc-if>
+<sc-if value="{{s.cross}}" hint-placeholder-val="{{ false }}"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 3.5l5 5M8.5 3.5l-5 5" fill="none" stroke="#FFFFFF" style="stroke-width: 2; stroke-linecap: round"></path></svg></sc-if>
+<sc-if value="{{s.current}}" hint-placeholder-val="{{ false }}"><span style="width: 10px; height: 10px; border-radius: 999px; background: #0D3542"></span></sc-if>
+</div>
+<div style="width: 2px; flex-grow: 1; min-height: 30px; background: {{s.line}}"></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 3px; padding-bottom: 22px; padding-top: 3px">
+<span style="font-size: 15px; font-weight: {{s.weight}}; color: {{s.labelColor}}">{{s.label}}</span>
+<span style="font-size: 13px; color: #4A6670">{{s.sub}}</span>
+</div>
+</li>
+</sc-for>
+</ol>
+</section>
+
+<section aria-label="Payment details" style="flex: 1.3 1 380px; background: #FFFFFF; border-radius: 24px; padding: 26px 28px; display: flex; flex-direction: column; gap: 6px">
+<h2 style="margin: 0 0 8px; font-size: 17px; font-weight: 600">Payment details</h2>
+<dl style="margin: 0; display: flex; flex-direction: column">
+<div style="display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid #EEF1EE"><dt style="color: #4A6670; font-size: 14px">Beneficiary receives</dt><dd style="margin: 0; font-weight: 600; font-size: 15px">USD 1,000.00</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid #EEF1EE"><dt style="color: #4A6670; font-size: 14px">Rate</dt><dd style="margin: 0; font-size: 15px">USD 1 = NGN 1,580.00</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid #EEF1EE"><dt style="color: #4A6670; font-size: 14px">Fee</dt><dd style="margin: 0; font-size: 15px">NGN 7,500.00</dd></div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 14px; margin: 6px -14px; border-radius: 14px; background: #F1FF99"><dt style="font-size: 14px; font-weight: 500">{{debitLabel}}</dt><dd style="margin: 0; font-weight: 600; font-size: 16px">NGN 1,587,500.00</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid #EEF1EE"><dt style="color: #4A6670; font-size: 14px">Beneficiary</dt><dd style="margin: 0; font-size: 15px; text-align: right">Shenzhen Ruiqi Machinery Co.<div style="font-size: 13px; color: #4A6670">18 Fuyuan Road, Bao’an, Shenzhen, China</div></dd></div>
+<div style="display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid #EEF1EE"><dt style="color: #4A6670; font-size: 14px">Bank</dt><dd style="margin: 0; font-size: 15px; text-align: right">Bank of China ····4821<div style="font-size: 13px; color: #4A6670">SWIFT BKCHCNBJ45A</div></dd></div>
+<div style="display: flex; justify-content: space-between; gap: 16px; padding: 12px 0"><dt style="color: #4A6670; font-size: 14px">Purpose</dt><dd style="margin: 0; font-size: 15px; text-align: right">Spare parts, invoice INV-2291</dd></div>
+</dl>
+</section>
+
+</div>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"status":{"editor":"enum","options":["Processing","Under review","Completed","Reversed","Declined"],"default":"Processing"},"$preview":{"width":1440,"height":1040}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const status = this.props.status ?? 'Processing';
+    const T = '#0D3542', L = '#E4FF1A', R = '#B42318', N = '#C4CFCC';
+    const done = (label, sub) => ({ label, sub, check: true, cross: false, current: false, dotBg: T, dotBd: T, line: T, weight: 500, labelColor: T });
+    const fail = (label, sub) => ({ label, sub, check: false, cross: true, current: false, dotBg: R, dotBd: R, line: N, weight: 600, labelColor: R });
+    const now = (label, sub, ring) => ({ label, sub, check: false, cross: false, current: true, dotBg: ring, dotBd: T, line: N, weight: 600, labelColor: T });
+    const wait = (label, sub) => ({ label, sub, check: false, cross: false, current: false, dotBg: '#FFFFFF', dotBd: N, line: N, weight: 400, labelColor: '#4A6670' });
+    const map = {
+      'Processing': {
+        chip: ['#E8EEF0', T, '#E8EEF0'], banner: [T, '#FFFFFF', '#C9D6DA', '#1E4A58'], star: false,
+        title: 'On its way', body: 'NGN 1,587,500.00 is held from your balance. Most payments to China arrive the same day.',
+        debit: 'Held from your balance', polling: true,
+        steps: [done('Received', '23 Nov, 09:14'), done('Checks passed', '23 Nov, 09:14'), now('Sent to beneficiary’s bank', 'In progress', L), wait('Delivered', 'Pending')]
+      },
+      'Under review': {
+        chip: ['#FEF3E2', '#93370D', '#FEF3E2'], banner: ['#FEF3E2', '#93370D', '#5C2A0C', '#FDE3BF'], star: false,
+        title: 'Under review', body: 'Our compliance team is checking this payment. No money has left your balance yet. We’ll email you if we need anything.',
+        debit: 'Amount to be debited', polling: true,
+        steps: [done('Received', '23 Nov, 09:14'), now('Under review', 'Started 23 Nov, 09:14', '#FEF3E2'), wait('Sent to beneficiary’s bank', 'Pending'), wait('Delivered', 'Pending')]
+      },
+      'Completed': {
+        chip: [L, T, L], banner: [L, T, '#1E4A58', '#F1FF99'], star: true,
+        title: 'Delivered', body: 'USD 1,000.00 reached Shenzhen Ruiqi Machinery Co. on 23 Nov at 09:16. Your receipt is ready to download.',
+        debit: 'Debited from your balance', polling: false,
+        steps: [done('Received', '23 Nov, 09:14'), done('Checks passed', '23 Nov, 09:14'), done('Sent to beneficiary’s bank', '23 Nov, 09:15'), done('Delivered', '23 Nov, 09:16')]
+      },
+      'Reversed': {
+        chip: ['#FFFFFF', R, R], banner: ['#FEF3F2', R, '#5B1A13', '#FDDAD6'], star: false,
+        title: 'Payment reversed, funds returned', body: 'Our payout partner could not deliver this payment. NGN 1,587,500.00, including the fee, is back in your available balance.',
+        debit: 'Returned to your balance', polling: false,
+        steps: [done('Received', '23 Nov, 09:14'), done('Checks passed', '23 Nov, 09:14'), fail('Delivery failed', '23 Nov, 09:16'), done('Funds returned', '23 Nov, 09:17')]
+      },
+      'Declined': {
+        chip: ['#FFFFFF', R, R], banner: ['#FEF3F2', R, '#5B1A13', '#FDDAD6'], star: false,
+        title: 'Payment declined', body: 'This beneficiary did not pass our checks, so the payment was not sent. Nothing was taken from your balance.',
+        debit: 'Amount (not debited)', polling: false,
+        steps: [done('Received', '23 Nov, 09:14'), fail('Declined', '23 Nov, 09:14'), wait('Sent to beneficiary’s bank', 'Not sent'), wait('Delivered', 'Not sent')]
+      }
+    };
+    const c = map[status] || map['Processing'];
+    const steps = c.steps.slice();
+    steps[steps.length - 1] = { ...steps[steps.length - 1], line: 'transparent' };
+    return {
+      status,
+      chipBg: c.chip[0], chipFg: c.chip[1], chipBd: c.chip[2],
+      bannerBg: c.banner[0], bannerFg: c.banner[1], bannerBodyColor: c.banner[2], arcColor: c.banner[3],
+      showStar: c.star,
+      bannerTitle: c.title, bannerBody: c.body, debitLabel: c.debit, polling: c.polling,
+      timeline: steps
+    };
+  }
+}
+</script>
+</body>
+</html>

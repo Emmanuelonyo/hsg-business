@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>HSG Business — pay suppliers abroad</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+html{scroll-behavior:smooth}
+a{color:#0D3542}a:hover{color:#08252E}
+@keyframes fxUp{from{opacity:0;translate:0 28px}to{opacity:1;translate:0 0}}
+@keyframes fxDrop{from{opacity:0;translate:0 -24px;scale:.96}to{opacity:1;translate:0 0;scale:1}}
+@keyframes fxWord{from{opacity:0;translate:0 .55em;rotate:4deg;filter:blur(8px)}to{opacity:1;translate:0 0;rotate:0deg;filter:blur(0)}}
+@keyframes fxFloat{0%,100%{translate:0 0;rotate:0deg}50%{translate:-18px 14px;rotate:-5deg}}
+@keyframes fxSpin{to{rotate:360deg}}
+@keyframes fxFade{from{opacity:0;translate:0 -6px}to{opacity:1;translate:0 0}}
+@keyframes fxReveal{from{opacity:0;translate:0 56px;scale:.96}to{opacity:1;translate:0 0;scale:1}}
+.fx-drop{animation:fxDrop .9s cubic-bezier(.22,1,.36,1) both}
+.fx-up{animation:fxUp 1s cubic-bezier(.22,1,.36,1) both}
+.fx-word{display:inline-block;animation:fxWord .9s cubic-bezier(.22,1,.36,1) both}
+.fx-float{animation:fxFloat 16s ease-in-out infinite}
+.fx-spin{animation:fxSpin 14s linear infinite}
+.fx-fade{animation:fxFade .4s cubic-bezier(.22,1,.36,1) both}
+.fx-btn{transition:transform .4s cubic-bezier(.34,1.56,.64,1),box-shadow .4s ease}
+.fx-btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 12px 28px rgba(13,53,66,.22)}
+.fx-btn:active{transform:scale(.96)}
+.fx-card{transition:transform .6s cubic-bezier(.34,1.56,.64,1),box-shadow .6s ease}
+.fx-card:hover{transform:translateY(-10px) rotate(-.6deg);box-shadow:0 24px 48px rgba(13,53,66,.16)}
+@supports (animation-timeline: view()){.fx-reveal{animation:fxReveal linear both;animation-timeline:view();animation-range:entry 0% cover 28%}}
+.fx-progress{position:fixed;top:0;left:0;right:0;height:4px;background:#0D3542;transform-origin:0 50%;scale:0 1;z-index:60;pointer-events:none}
+@keyframes fxGrowX{from{scale:0 1}to{scale:1 1}}
+@keyframes fxNav{to{max-width:940px;box-shadow:0 18px 44px rgba(13,53,66,.34)}}
+@keyframes fxHeroOut{to{opacity:.1;translate:0 -110px;scale:.94;filter:blur(6px)}}
+@keyframes fxArc{to{scale:1.4}}
+@keyframes fxArcRot{from{rotate:-25deg}to{rotate:45deg}}
+@keyframes fxSlide{from{opacity:0;translate:220px 0}to{opacity:1;translate:-80px 0}}
+@keyframes fxZoom{from{opacity:0;scale:.45;filter:blur(12px)}to{opacity:1;scale:1;filter:blur(0)}}
+@keyframes fxCta{from{scale:.84;border-radius:120px;opacity:.35}to{scale:1;border-radius:40px;opacity:1}}
+@keyframes fxStack{to{scale:.94;filter:brightness(.92)}}
+@keyframes fxBar{0%{width:100%}100%{width:8%}}
+@keyframes fxPop{0%,62%{scale:1;box-shadow:0 0 0 0 rgba(228,255,26,0)}70%{scale:1.06;box-shadow:0 0 0 10px rgba(228,255,26,.35)}80%,100%{scale:1;box-shadow:0 0 0 0 rgba(228,255,26,0)}}
+.fx-bar{animation:fxBar 9s linear infinite}
+.fx-pop{animation:fxPop 3.6s ease-in-out infinite}
+@supports (animation-timeline: scroll()){
+.fx-progress{animation:fxGrowX linear both;animation-timeline:scroll(root)}
+.fx-nav{animation:fxDrop .9s cubic-bezier(.22,1,.36,1) both,fxNav linear both;animation-timeline:auto,scroll(root);animation-range:normal,0px 280px}
+.fx-hero-out{animation:fxHeroOut linear both;animation-timeline:view();animation-range:exit 0% exit 100%}
+.fx-arc{animation:fxFloat 16s ease-in-out infinite,fxArc linear both;animation-timeline:auto,scroll(root);animation-range:normal,0px 800px}
+.fx-arc-rot{animation:fxArcRot linear both;animation-timeline:view()}
+.fx-slide{animation:fxSlide linear both;animation-timeline:view();animation-range:entry 0% exit 70%}
+.fx-zoom{animation:fxZoom linear both;animation-timeline:view();animation-range:entry 10% cover 40%}
+.fx-cta{animation:fxCta linear both;animation-timeline:view();animation-range:entry 0% cover 45%}
+.fx-stack{animation:fxReveal linear both,fxStack linear both;animation-timeline:view(),view();animation-range:entry 0% cover 25%,exit-crossing 0% exit-crossing 100%}
+}
+@media (prefers-reduced-motion: reduce){.fx-drop,.fx-up,.fx-word,.fx-float,.fx-spin,.fx-fade,.fx-reveal,.fx-nav,.fx-hero-out,.fx-arc,.fx-arc-rot,.fx-slide,.fx-zoom,.fx-cta,.fx-stack,.fx-bar,.fx-pop{animation:none!important}.fx-progress{display:none}.fx-btn,.fx-card{transition:none!important}.fx-btn:hover,.fx-card:hover{transform:none}}
+</style>
+</helmet>
+<div style="font-family: Poppins, system-ui, sans-serif; color: #0D3542; background: #F5F7F2; font-variant-numeric: tabular-nums">
+
+<div class="fx-progress" aria-hidden="true"></div>
+<div style="position: sticky; top: 0; z-index: 50; height: 0">
+<div style="padding: 20px 24px 0">
+<nav class="fx-drop fx-nav" aria-label="Main" style="position: relative; max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 10px 10px 18px; background: #0D3542; border-radius: 999px; box-shadow: 0 12px 32px rgba(13, 53, 66, 0.18)">
+<a href="#top" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #FFFFFF">
+<svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="24" fill="#E4FF1A"></rect><g fill="#0D3542"><rect x="21" y="9" width="6" height="30" rx="3"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(45 24 24)"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(90 24 24)"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(135 24 24)"></rect></g></svg>
+<span style="font-weight: 600; font-size: 16px">HSG Business</span>
+</a>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 4px; background: #1E4A58; border-radius: 999px">
+<sc-for list="{{links}}" as="l" hint-placeholder-count="4">
+<a href="{{l.href}}" onClick="{{l.pick}}" aria-current="{{l.current}}" style="height: 38px; padding: 0 16px; border-radius: 999px; display: inline-flex; align-items: center; font-size: 14px; font-weight: 500; text-decoration: none; background: {{l.bg}}; color: {{l.fg}}">{{l.label}}</a>
+</sc-for>
+</div>
+<div style="display: flex; align-items: center; gap: 6px">
+<a href="SME-Login.dc.html" style="height: 42px; padding: 0 16px; border-radius: 999px; display: inline-flex; align-items: center; font-size: 14px; font-weight: 500; color: #FFFFFF; text-decoration: none">Sign in</a>
+<a class="fx-btn" href="SME-Login.dc.html" style="height: 44px; padding: 0 20px; border-radius: 999px; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; background: #E4FF1A; color: #0D3542; text-decoration: none">Open an account<svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5" fill="none" stroke="#0D3542" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"></path></svg></a>
+</div>
+</nav>
+</div>
+</div>
+<header style="background: #E4FF1A; position: relative; overflow: hidden; padding: 88px 24px 96px">
+<svg class="fx-float fx-arc" width="640" height="640" viewBox="0 0 640 640" aria-hidden="true" style="position: absolute; right: -180px; top: -160px"><path d="M40 640 A600 600 0 0 1 640 40" fill="none" stroke="#F1FF99" style="stroke-width: 84"></path><path d="M200 640 A440 440 0 0 1 640 200" fill="none" stroke="#F1FF99" style="stroke-width: 84"></path></svg>
+
+
+<div id="top" class="fx-hero-out" style="position: relative; max-width: 900px; margin: 96px auto 24px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 26px">
+<span class="fx-up" style="animation-delay: 150ms; display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 6px; background: #0D3542; color: #FFFFFF; border-radius: 999px; font-size: 13px; font-weight: 500"><span style="background: #E4FF1A; color: #0D3542; padding: 3px 10px; border-radius: 999px; font-weight: 600">New</span>Pay in USD, EUR, GBP, MXN, BRL and COP</span>
+<h1 style="margin: 0; font-size: 72px; line-height: 78px; font-weight: 500; letter-spacing: -0.03em"><span class="fx-word" style="animation-delay: 260ms">Pay</span> <span class="fx-word" style="animation-delay: 330ms">suppliers</span> <span class="fx-word" style="animation-delay: 400ms">abroad</span> <span class="fx-word" style="animation-delay: 470ms">from</span> <span class="fx-word" style="animation-delay: 540ms">your</span> <span class="fx-word" style="animation-delay: 610ms">naira</span> <span class="fx-word" style="animation-delay: 680ms">account.</span></h1>
+<p class="fx-up" style="animation-delay: 820ms; margin: 0; font-size: 19px; line-height: 30px; color: #1E4A58; max-width: 620px">Fund by bank transfer, lock a rate for 60 seconds, and track every payment to delivery. If a payment can’t be delivered, your naira comes back.</p>
+<div class="fx-up" style="animation-delay: 960ms; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px">
+<a class="fx-btn" href="SME-Login.dc.html" style="height: 56px; padding: 0 28px; border-radius: 999px; display: inline-flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 600; background: #0D3542; color: #E4FF1A; text-decoration: none">Open a business account<svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5" fill="none" stroke="#E4FF1A" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"></path></svg></a>
+<a class="fx-btn" href="#how" style="height: 56px; padding: 0 26px; border-radius: 999px; display: inline-flex; align-items: center; font-size: 16px; font-weight: 500; border: 1.5px solid #0D3542; color: #0D3542; text-decoration: none">See how it works</a>
+</div>
+</div>
+</header>
+
+<section id="currencies" aria-label="Payout currencies" style="background: #0D3542; color: #FFFFFF; padding: 28px 24px; overflow: hidden">
+<div class="fx-slide" style="max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; justify-content: space-between">
+<span style="font-size: 13px; font-weight: 600; color: #E4FF1A; text-transform: uppercase; letter-spacing: 0.08em">Where your suppliers get paid</span>
+<sc-for list="{{rails}}" as="r" hint-placeholder-count="6">
+<span style="display: inline-flex; align-items: baseline; gap: 8px"><span style="font-size: 20px; font-weight: 600">{{r.code}}</span><span style="font-size: 13px; color: #9FB4BA">{{r.rail}}</span></span>
+</sc-for>
+</div>
+</section>
+
+<section id="how" style="padding: 104px 24px">
+<div style="max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px">
+<div class="fx-reveal" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px">
+<h2 style="margin: 0; font-size: 48px; line-height: 56px; font-weight: 500; letter-spacing: -0.02em; max-width: 620px">Three steps. No new tools for your finance team.</h2>
+<p style="margin: 0; font-size: 16px; line-height: 26px; color: #4A6670; max-width: 400px">If your team can make a bank transfer, they can pay a supplier in Rotterdam, Birmingham or São Paulo.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 28px">
+<div class="fx-card fx-stack" style="background: #E4FF1A; border-radius: 32px; padding: 44px; display: flex; flex-wrap: wrap; align-items: center; gap: 40px; min-height: 360px; position: sticky; top: 112px; overflow: hidden; box-shadow: 0 -16px 40px rgba(13, 53, 66, 0.10)">
+<svg class="fx-float" width="420" height="420" viewBox="0 0 420 420" aria-hidden="true" style="position: absolute; left: -150px; bottom: -190px"><path d="M0 60 A360 360 0 0 1 360 420" fill="none" stroke="#F1FF99" style="stroke-width: 70"></path></svg>
+<div style="flex: 1 1 340px; display: flex; flex-direction: column; gap: 16px; position: relative">
+<span style="align-self: flex-start; font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 999px; background: #0D3542; color: #E4FF1A">Step 01</span>
+<span style="font-size: 38px; line-height: 44px; font-weight: 500; letter-spacing: -0.02em">Fund your account</span>
+<span style="font-size: 16px; line-height: 26px; color: #1E4A58; max-width: 440px">You get your own naira account number. Pay into it from any Nigerian bank app and it arrives in seconds.</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px">
+<span style="font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 999px; border: 1.5px solid #0D3542">Any Nigerian bank app</span>
+<span style="font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 999px; border: 1.5px solid #0D3542">Instant bank transfer</span>
+<span style="font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 999px; border: 1.5px solid #0D3542">Email receipt</span>
+</div>
+</div>
+<div aria-hidden="true" style="flex: 1 1 360px; display: flex; justify-content: center; position: relative">
+<div style="width: 100%; max-width: 400px; background: #FFFFFF; border-radius: 26px; padding: 22px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 24px 50px rgba(13, 53, 66, 0.18); rotate: -2deg">
+<div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 12px; font-weight: 600; color: #4A6670; text-transform: uppercase; letter-spacing: 0.08em">Your naira account</span><span style="display: inline-flex; gap: 4px"><span style="width: 6px; height: 6px; background: #0D3542"></span><span style="width: 6px; height: 6px; background: #0D3542"></span><span style="width: 6px; height: 6px; background: #0D3542"></span></span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-radius: 16px; background: #F5F7F2"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 500; letter-spacing: 0.05em">9920 417 362</span><span style="font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 999px; background: #0D3542; color: #E4FF1A">Copy</span></div>
+<div class="fx-pop" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 18px; background: #0D3542; color: #FFFFFF">
+<span style="width: 40px; height: 40px; border-radius: 999px; background: #E4FF1A; color: #0D3542; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="18" height="18" viewBox="0 0 20 20"><path d="M15.5 4.5L4.5 15.5M12 15.5H4.5V8" fill="none" stroke="#0D3542" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"></path></svg></span>
+<span style="display: flex; flex-direction: column; flex-grow: 1; min-width: 0"><span style="font-size: 13px; font-weight: 600">Money in · Adebayo Imports Ltd</span><span style="font-size: 12px; color: #9FB4BA">Just now</span></span>
+<span style="font-size: 14px; font-weight: 600; color: #E4FF1A; white-space: nowrap">+ NGN 5,000,000</span>
+</div>
+<div style="display: flex; justify-content: space-between; font-size: 13px; color: #4A6670"><span>Available balance</span><span style="font-weight: 600; color: #0D3542">NGN 12,840,250.00</span></div>
+</div>
+</div>
+</div>
+<div class="fx-card fx-stack" style="background: #0D3542; color: #FFFFFF; border-radius: 32px; padding: 44px; display: flex; flex-wrap: wrap; align-items: center; gap: 40px; min-height: 360px; position: sticky; top: 136px; overflow: hidden; box-shadow: 0 -16px 40px rgba(13, 53, 66, 0.16)">
+<svg class="fx-float" width="420" height="420" viewBox="0 0 420 420" aria-hidden="true" style="position: absolute; right: -160px; top: -170px"><path d="M0 60 A360 360 0 0 1 360 420" fill="none" stroke="#1E4A58" style="stroke-width: 70"></path></svg>
+<div style="flex: 1 1 340px; display: flex; flex-direction: column; gap: 16px; position: relative">
+<span style="align-self: flex-start; font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 999px; background: #E4FF1A; color: #0D3542">Step 02</span>
+<span style="font-size: 38px; line-height: 44px; font-weight: 500; letter-spacing: -0.02em">Lock your rate</span>
+<span style="font-size: 16px; line-height: 26px; color: #C9D6DA; max-width: 440px">Pick the currency your supplier needs. You see the rate, the fee and the exact naira total before you confirm.</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px">
+<span style="font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 999px; border: 1.5px solid #4A7684">6 currencies</span>
+<span style="font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 999px; border: 1.5px solid #4A7684">Rate held 60 seconds</span>
+<span style="font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 999px; border: 1.5px solid #4A7684">Fee shown upfront</span>
+</div>
+</div>
+<div aria-hidden="true" style="flex: 1 1 360px; display: flex; justify-content: center; position: relative">
+<div style="width: 100%; max-width: 400px; background: #FFFFFF; color: #0D3542; border-radius: 26px; padding: 22px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 24px 50px rgba(0, 0, 0, 0.28); rotate: 2deg">
+<div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px">
+<span style="text-align: center; font-size: 12px; font-weight: 600; padding: 8px 0; border-radius: 999px; background: #F5F7F2">USD</span>
+<span style="text-align: center; font-size: 12px; font-weight: 600; padding: 8px 0; border-radius: 999px; background: #0D3542; color: #E4FF1A">EUR</span>
+<span style="text-align: center; font-size: 12px; font-weight: 600; padding: 8px 0; border-radius: 999px; background: #F5F7F2">GBP</span>
+<span style="text-align: center; font-size: 12px; font-weight: 600; padding: 8px 0; border-radius: 999px; background: #F5F7F2">MXN</span>
+<span style="text-align: center; font-size: 12px; font-weight: 600; padding: 8px 0; border-radius: 999px; background: #F5F7F2">BRL</span>
+<span style="text-align: center; font-size: 12px; font-weight: 600; padding: 8px 0; border-radius: 999px; background: #F5F7F2">COP</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 12px; color: #4A6670">Supplier receives, by SEPA</span><span style="font-size: 28px; font-weight: 500; letter-spacing: -0.02em">EUR 2,000.00</span></div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; font-size: 12px"><span style="color: #4A6670">EUR 1 = NGN 1,835.00</span><span style="font-weight: 600">Rate held 0:42</span></div>
+<div style="height: 8px; border-radius: 999px; background: #F5F7F2; overflow: hidden"><div class="fx-bar" style="height: 100%; width: 70%; border-radius: 999px; background: #0D3542"></div></div>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-radius: 16px; background: #E4FF1A"><span style="font-size: 13px; font-weight: 500">You pay, fee included</span><span style="font-size: 16px; font-weight: 600">NGN 3,677,500.00</span></div>
+</div>
+</div>
+</div>
+<div class="fx-card fx-stack" style="background: #FFFFFF; border-radius: 32px; padding: 44px; display: flex; flex-wrap: wrap; align-items: center; gap: 40px; min-height: 360px; position: sticky; top: 160px; overflow: hidden; box-shadow: 0 -16px 40px rgba(13, 53, 66, 0.10)">
+<svg class="fx-spin" width="90" height="90" viewBox="0 0 48 48" aria-hidden="true" style="position: absolute; right: 36px; top: 30px"><path d="M24 0C25.5 15 33 22.5 48 24C33 25.5 25.5 33 24 48C22.5 33 15 25.5 0 24C15 22.5 22.5 15 24 0Z" fill="#E4FF1A"></path></svg>
+<div style="flex: 1 1 340px; display: flex; flex-direction: column; gap: 16px; position: relative">
+<span style="align-self: flex-start; font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 999px; background: #0D3542; color: #E4FF1A">Step 03</span>
+<span style="font-size: 38px; line-height: 44px; font-weight: 500; letter-spacing: -0.02em">Track it to delivery</span>
+<span style="font-size: 16px; line-height: 26px; color: #4A6670; max-width: 440px">Follow each payment from received to delivered, and download the receipt for your books.</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px">
+<span style="font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 999px; background: #F5F7F2">Live status</span>
+<span style="font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 999px; background: #F5F7F2">Downloadable receipt</span>
+<span style="font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 999px; background: #F5F7F2">Full refund if undeliverable</span>
+</div>
+</div>
+<div aria-hidden="true" style="flex: 1 1 360px; display: flex; justify-content: center; position: relative">
+<div style="width: 100%; max-width: 400px; background: #0D3542; color: #FFFFFF; border-radius: 26px; padding: 24px; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 24px 50px rgba(13, 53, 66, 0.25); rotate: -2deg">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px"><span style="font-size: 14px; font-weight: 600">GBP 3,200.00 to Midlands Tooling</span><span style="font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 999px; background: #E4FF1A; color: #0D3542">Completed</span></div>
+<div style="display: flex; gap: 12px"><div style="display: flex; flex-direction: column; align-items: center"><span style="width: 22px; height: 22px; border-radius: 999px; background: #E4FF1A; display: flex; align-items: center; justify-content: center"><svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.2l2.2 2.2 4.8-4.8" fill="none" stroke="#0D3542" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"></path></svg></span><span style="width: 2px; height: 20px; background: #E4FF1A"></span></div><span style="font-size: 13px; padding-top: 2px">Received <span style="color: #9FB4BA">· 10:02</span></span></div>
+<div style="display: flex; gap: 12px"><div style="display: flex; flex-direction: column; align-items: center"><span style="width: 22px; height: 22px; border-radius: 999px; background: #E4FF1A; display: flex; align-items: center; justify-content: center"><svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.2l2.2 2.2 4.8-4.8" fill="none" stroke="#0D3542" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"></path></svg></span><span style="width: 2px; height: 20px; background: #E4FF1A"></span></div><span style="font-size: 13px; padding-top: 2px">Checks passed <span style="color: #9FB4BA">· 10:02</span></span></div>
+<div style="display: flex; gap: 12px"><div style="display: flex; flex-direction: column; align-items: center"><span style="width: 22px; height: 22px; border-radius: 999px; background: #E4FF1A; display: flex; align-items: center; justify-content: center"><svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.2l2.2 2.2 4.8-4.8" fill="none" stroke="#0D3542" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"></path></svg></span><span style="width: 2px; height: 20px; background: #E4FF1A"></span></div><span style="font-size: 13px; padding-top: 2px">Sent by Faster Payments <span style="color: #9FB4BA">· 10:03</span></span></div>
+<div style="display: flex; gap: 12px"><span class="fx-pop" style="width: 22px; height: 22px; border-radius: 999px; background: #E4FF1A; display: flex; align-items: center; justify-content: center"><svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.2l2.2 2.2 4.8-4.8" fill="none" stroke="#0D3542" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"></path></svg></span><span style="font-size: 13px; font-weight: 600; padding-top: 2px">Delivered <span style="color: #9FB4BA; font-weight: 400">· 10:04</span></span></div>
+<div style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; border-radius: 14px; background: #1E4A58"><span style="font-size: 13px">Receipt HSG-20261125-000188</span><span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #E4FF1A"><svg width="14" height="14" viewBox="0 0 20 20"><path d="M10 3v10M6 9l4 4 4-4M4 16h12" fill="none" stroke="#E4FF1A" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"></path></svg>PDF</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="why" style="padding: 0 24px 104px">
+<div style="max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 20px">
+<div class="fx-reveal" style="flex: 1 1 420px; background: #0D3542; color: #FFFFFF; border-radius: 32px; padding: 44px; display: flex; flex-direction: column; gap: 18px; position: relative; overflow: hidden; min-height: 380px">
+<svg class="fx-arc-rot" width="300" height="300" viewBox="0 0 300 300" aria-hidden="true" style="position: absolute; right: -70px; bottom: -70px"><path d="M26 300 A274 274 0 0 1 300 26" fill="none" stroke="#1E4A58" style="stroke-width: 52"></path><path d="M134 300 A166 166 0 0 1 300 134" fill="none" stroke="#E4FF1A" style="stroke-width: 52"></path></svg>
+<span style="font-size: 13px; font-weight: 600; color: #E4FF1A; text-transform: uppercase; letter-spacing: 0.08em; position: relative">Why it matters</span>
+<span class="fx-zoom" style="font-size: 76px; font-weight: 500; line-height: 80px; letter-spacing: -0.03em; position: relative; transform-origin: left center">8.46%</span>
+<p style="margin: 0; font-size: 17px; line-height: 27px; color: #C9D6DA; max-width: 420px; position: relative">Sub-Saharan Africa is the most expensive region in the world to send money to, at 8.46% on average (World Bank, 2025). Correspondent bank payments also take two to five business days.</p>
+</div>
+<div class="fx-reveal" style="flex: 1 1 420px; display: flex; flex-direction: column; gap: 20px">
+<div class="fx-card" style="background: #FFFFFF; border-radius: 28px; padding: 32px; display: flex; gap: 20px; align-items: flex-start; flex-grow: 1">
+<svg width="44" height="44" viewBox="0 0 20 20" aria-hidden="true" style="flex-shrink: 0"><path d="M10 2.5l6 2.5v4.5c0 3.8-2.6 6.6-6 8-3.4-1.4-6-4.2-6-8V5z" fill="#E4FF1A" stroke="#0D3542" style="stroke-width: 1.4; stroke-linejoin: round"></path></svg>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 20px; font-weight: 600">Checked before money moves</span><span style="font-size: 15px; line-height: 24px; color: #4A6670">Every business is verified, and every beneficiary is screened when added and again before each payment.</span></div>
+</div>
+<div class="fx-card" style="background: #E4FF1A; border-radius: 28px; padding: 32px; display: flex; gap: 20px; align-items: flex-start; flex-grow: 1">
+<svg class="fx-spin" width="44" height="44" viewBox="0 0 48 48" aria-hidden="true" style="flex-shrink: 0"><g fill="#0D3542"><rect x="20" y="2" width="8" height="44" rx="4"></rect><rect x="20" y="2" width="8" height="44" rx="4" transform="rotate(45 24 24)"></rect><rect x="20" y="2" width="8" height="44" rx="4" transform="rotate(90 24 24)"></rect><rect x="20" y="2" width="8" height="44" rx="4" transform="rotate(135 24 24)"></rect></g></svg>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 20px; font-weight: 600">Nothing gets stuck</span><span style="font-size: 15px; line-height: 24px; color: #1E4A58">A payment is either delivered or reversed in full, fee included. You never have to chase money that is in limbo.</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="faq" style="padding: 0 24px 104px">
+<div style="max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px">
+<h2 class="fx-reveal" style="margin: 0; font-size: 44px; line-height: 52px; font-weight: 500; letter-spacing: -0.02em; text-align: center">Questions businesses ask</h2>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{faqs}}" as="f" hint-placeholder-count="4">
+<div class="fx-reveal" style="background: {{f.bg}}; color: {{f.fg}}; border-radius: 24px; overflow: hidden">
+<button type="button" onClick="{{f.toggle}}" aria-expanded="{{f.open}}" style="width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 26px; border: 0; background: transparent; color: inherit; font-family: Poppins, sans-serif; font-size: 17px; font-weight: 600; text-align: left; cursor: pointer">{{f.q}}<span style="width: 36px; height: 36px; flex-shrink: 0; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 500; background: {{f.iconBg}}; color: {{f.iconFg}}">{{f.icon}}</span></button>
+<sc-if value="{{f.open}}" hint-placeholder-val="{{ false }}"><p class="fx-fade" style="margin: 0; padding: 0 26px 24px; font-size: 15px; line-height: 25px; color: {{f.aColor}}">{{f.a}}</p></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section style="padding: 0 24px 96px">
+<div class="fx-cta" style="max-width: 1180px; margin: 0 auto; background: #E4FF1A; border-radius: 40px; padding: 64px 48px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 32px; position: relative; overflow: hidden">
+<svg class="fx-float" width="360" height="360" viewBox="0 0 360 360" aria-hidden="true" style="position: absolute; left: -110px; bottom: -150px"><path d="M0 40 A320 320 0 0 1 320 360" fill="none" stroke="#F1FF99" style="stroke-width: 64"></path></svg>
+<h2 style="margin: 0; font-size: 52px; line-height: 58px; font-weight: 500; letter-spacing: -0.02em; max-width: 620px; position: relative">Your next supplier payment, without the wait.</h2>
+<div style="display: flex; flex-direction: column; gap: 12px; position: relative">
+<a class="fx-btn" href="SME-Login.dc.html" style="height: 58px; padding: 0 30px; border-radius: 999px; display: inline-flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 600; background: #0D3542; color: #E4FF1A; text-decoration: none">Open a business account<svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5" fill="none" stroke="#E4FF1A" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"></path></svg></a>
+<span style="font-size: 13px; color: #1E4A58; text-align: center">Verification usually takes one working day.</span>
+</div>
+</div>
+</section>
+
+<footer style="background: #0D3542; color: #C9D6DA; padding: 48px 24px">
+<div style="max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; align-items: flex-start">
+<div style="display: flex; flex-direction: column; gap: 12px; max-width: 420px">
+<div style="display: flex; align-items: center; gap: 10px; color: #FFFFFF"><svg width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="24" fill="#E4FF1A"></rect><g fill="#0D3542"><rect x="21" y="9" width="6" height="30" rx="3"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(45 24 24)"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(90 24 24)"></rect><rect x="21" y="9" width="6" height="30" rx="3" transform="rotate(135 24 24)"></rect></g></svg><span style="font-weight: 600">HSG Business</span></div>
+<span style="font-size: 13px; line-height: 21px">A final-year project prototype, Miva Open University. Payouts run through licensed partners in sandbox. No real money moves.</span>
+</div>
+<div style="display: flex; gap: 48px; flex-wrap: wrap; font-size: 14px">
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="color: #E4FF1A; font-weight: 600">Product</span><a href="#how" style="color: #C9D6DA; text-decoration: none">How it works</a><a href="#why" style="color: #C9D6DA; text-decoration: none">Why HSG</a><a href="#faq" style="color: #C9D6DA; text-decoration: none">FAQ</a></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="color: #E4FF1A; font-weight: 600">Account</span><a href="SME-Login.dc.html" style="color: #C9D6DA; text-decoration: none">Sign in</a><a href="SME-Login.dc.html" style="color: #C9D6DA; text-decoration: none">Open an account</a></div>
+</div>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3600}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { active: 'how', open: 0 };
+  }
+  renderVals() {
+    const nav = [['how', 'How it works'], ['why', 'Why HSG'], ['currencies', 'Currencies'], ['faq', 'FAQ']];
+    const faqs = [
+      ['Which currencies can my suppliers receive?', 'USD by ACH or wire, EUR by SEPA, GBP by Faster Payments, MXN by SPEI, BRL by Pix and COP by Bre-B. Your supplier receives exactly the amount you choose.'],
+      ['How long does it take?', 'Funding your account by bank transfer takes seconds. Payment times depend on the supplier’s country and bank, and you can follow each payment to delivery.'],
+      ['What happens if a payment fails?', 'It is reversed. The full naira amount, including the fee, goes back to your available balance, and you see the reason on the payment page.'],
+      ['Who can open an account?', 'Registered Nigerian businesses. We verify your company documents and directors before your account opens.']
+    ];
+    return {
+      links: nav.map((n) => {
+        const on = this.state.active === n[0];
+        return { label: n[1], href: '#' + n[0], current: on ? 'true' : 'false', bg: on ? '#E4FF1A' : 'transparent', fg: on ? '#0D3542' : '#D5E0E3', pick: () => this.setState({ active: n[0] }) };
+      }),
+      rails: [
+        { code: 'USD', rail: 'ACH · Wire' }, { code: 'EUR', rail: 'SEPA' }, { code: 'GBP', rail: 'Faster Payments' },
+        { code: 'MXN', rail: 'SPEI' }, { code: 'BRL', rail: 'Pix' }, { code: 'COP', rail: 'Bre-B' }
+      ],
+      faqs: faqs.map((f, i) => {
+        const open = this.state.open === i;
+        return { q: f[0], a: f[1], open, icon: open ? '−' : '+',
+          bg: open ? '#0D3542' : '#FFFFFF', fg: open ? '#FFFFFF' : '#0D3542', aColor: open ? '#C9D6DA' : '#4A6670',
+          iconBg: open ? '#E4FF1A' : '#F5F7F2', iconFg: '#0D3542',
+          toggle: () => this.setState({ open: open ? -1 : i }) };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>
