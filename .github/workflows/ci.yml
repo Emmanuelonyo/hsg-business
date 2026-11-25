@@ -1,0 +1,132 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: backend (typecheck + jest)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: hsg-backend
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 3s --health-timeout 3s --health-retries 30
+      redis:
+        image: redis:7
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 3s --health-timeout 3s --health-retries 30
+
+    env:
+      # Same names as hsg-backend/.env. Jest (test/setup-env.ts) swaps DATABASE_URL for TEST_DATABASE_URL.
+      DATABASE_URL: postgresql://hsg_app:hsg_app@localhost:5432/hsg_test
+      MIGRATE_DATABASE_URL: postgresql://hsg_owner:hsg_owner@localhost:5432/hsg_test
+      TEST_DATABASE_URL: postgresql://hsg_app:hsg_app@localhost:5432/hsg_test
+      TEST_MIGRATE_DATABASE_URL: postgresql://hsg_owner:hsg_owner@localhost:5432/hsg_test
+      REDIS_URL: redis://localhost:6379/0
+      TEST_REDIS_URL: redis://localhost:6379/1
+      JWT_SECRET: ci-only
+      RPC_URL: http://127.0.0.1:8545
+      CHAIN_ID: "31337"
+      CHAIN_CONFIG_PATH: ./chain.local.json
+      PAYOUT_PARTNER: SIMULATED
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: hsg-backend/package-lock.json
+
+      - name: Install
+        run: npm ci --no-audit --no-fund
+
+      - name: Prisma generate
+        run: npx prisma generate
+
+      - name: Create roles, databases and default grants
+        # Same script Docker uses; must run before migrations so hsg_app can write.
+        working-directory: .
+        env:
+          PGPASSWORD: postgres
+        run: psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -f docker/postgres-init.sql
+
+      - name: Migrate test database (includes ledger guards)
+        run: npx prisma migrate deploy
+
+      - name: Install Foundry (anvil)
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: stable
+
+      - name: Start anvil
+        run: |
+          anvil --port 8545 --block-time 2 --chain-id 31337 \
+            --mnemonic 'test test test test test test test test test test test junk' > anvil.log 2>&1 &
+          for i in $(seq 1 30); do
+            curl -s -X POST -H 'content-type: application/json' \
+              --data '{"jsonrpc":"2.0","id":1,"method":"eth_chainId","params":[]}' \
+              http://127.0.0.1:8545 | grep -q result && exit 0
+            sleep 1
+          done
+          echo "anvil did not start"; cat anvil.log; exit 1
+
+      - name: Deploy mock token (writes chain.local.json)
+        run: npm run chain:deploy
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Jest (ledger, compliance, settlement, fiat boundary, saga)
+        run: npm test -- --ci
+
+  frontend:
+    name: frontend (typecheck + lint + build)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: hsg-frontend
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      API_INTERNAL_URL: http://localhost:4000
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: hsg-frontend/package-lock.json
+
+      - name: Install
+        run: npm ci --no-audit --no-fund
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build

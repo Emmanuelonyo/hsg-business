@@ -1,0 +1,167 @@
+# HSG: the whole stack in containers.
+#
+#   docker compose up --build          first run: migrate, deploy mock token, seed, start
+#   docker compose down -v             wipe EVERYTHING (database, chain state, chain config)
+#   docker compose down -v && docker compose up --build    = clean-database demo run
+#
+# Web http://localhost:3000   API http://localhost:4000/api   Chain RPC http://localhost:8545
+#
+# Postgres and anvil state live in named volumes, so a plain `down`/`up` keeps the ledger
+# and the chain in step (ledger account 1100 == treasury tokens on chain). Only wipe both
+# together with `down -v`.
+
+x-backend-env: &backend-env
+  DATABASE_URL: postgresql://hsg_app:hsg_app@postgres:5432/hsg
+  MIGRATE_DATABASE_URL: postgresql://hsg_owner:hsg_owner@postgres:5432/hsg
+  REDIS_URL: redis://redis:6379/0
+  JWT_SECRET: ${JWT_SECRET:-dev-only-change-me}
+  API_PORT: "4000"
+  WEB_ORIGIN: http://localhost:3000
+  RPC_URL: http://anvil:8545
+  CHAIN_ID: "31337"
+  EXPLORER_TX_URL: ""
+  CHAIN_CONFIG_PATH: /shared/chain.local.json
+  PAYOUT_PARTNER: SIMULATED
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Creates hsg_owner / hsg_app, databases hsg + hsg_test and the default grants.
+      - ./docker/postgres-init.sql:/docker-entrypoint-initdb.d/01-hsg.sql:ro
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U hsg_owner -d hsg"]  # TCP only answers after init finishes
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+  redis:
+    image: redis:7
+    # Persist queues and per-wallet nonce counters alongside the chain state.
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redisdata:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+  anvil:
+    image: ghcr.io/foundry-rs/foundry:stable
+    # The image's entrypoint is `/bin/sh -c`, so the command is one string.
+    # --state persists the chain to the volume (dumped every 10 s and on shutdown).
+    user: root
+    command:
+      - >-
+        anvil --host 0.0.0.0 --port 8545 --block-time 2 --chain-id 31337
+        --mnemonic 'test test test test test test test test test test test junk'
+        --state /anvil/state.json --state-interval 10
+    volumes:
+      - anvildata:/anvil
+    ports:
+      - "8545:8545"
+    healthcheck:
+      test: ["CMD-SHELL", "cast block-number --rpc-url http://127.0.0.1:8545"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+  # One-shot: migrations always (idempotent); token deploy + seed only on the first run
+  # (marker file in the shared volume), because both must happen exactly once per chain.
+  migrate-seed:
+    build: ./hsg-backend
+    image: hsg-backend:local
+    environment: *backend-env
+    volumes:
+      - chainconfig:/shared
+    command:
+      - sh
+      - -c
+      - |
+        set -e
+        npx prisma migrate deploy
+        if [ -f /shared/.seeded ]; then
+          echo "migrate-seed: already seeded; skipping chain deploy and seed"
+        else
+          npm run chain:deploy
+          npm run db:seed
+          touch /shared/.seeded
+        fi
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      anvil: { condition: service_healthy }
+    restart: "no"
+
+  api:
+    image: hsg-backend:local
+    environment: *backend-env
+    volumes:
+      - chainconfig:/shared:ro
+    command: ["node", "dist/main.js"]
+    ports:
+      - "4000:4000"
+    depends_on:
+      migrate-seed: { condition: service_completed_successfully }
+    healthcheck:
+      # No health route: an empty login must answer 400 (validation) or 401.
+      test:
+        - CMD
+        - node
+        - -e
+        - >-
+          fetch('http://127.0.0.1:4000/api/auth/login',{method:'POST',headers:{'content-type':'application/json'},body:'{}'})
+          .then(r=>process.exit([400,401,422].includes(r.status)?0:1)).catch(()=>process.exit(1))
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  worker:
+    image: hsg-backend:local
+    environment: *backend-env
+    volumes:
+      - chainconfig:/shared:ro
+    command: ["node", "dist/worker.js"]
+    depends_on:
+      migrate-seed: { condition: service_completed_successfully }
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./hsg-frontend
+      args:
+        # Baked into the Next.js rewrite at build time: browser -> web:/api/* -> api:4000.
+        API_INTERNAL_URL: http://api:4000
+    image: hsg-frontend:local
+    environment:
+      API_INTERNAL_URL: http://api:4000
+    ports:
+      - "3000:3000"
+    depends_on:
+      api: { condition: service_healthy }
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/login').then(r=>process.exit(r.status<500?0:1)).catch(()=>process.exit(1))"
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  redisdata:
+  anvildata:
+  chainconfig:
