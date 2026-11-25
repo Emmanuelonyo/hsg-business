@@ -1,0 +1,50 @@
+/* Landing page motion, ported verbatim from docs/design/project/Landing.dc.html (<style> block).
+   Imported only by app/page.tsx. Scroll-driven effects sit behind @supports (animation-timeline) guards;
+   prefers-reduced-motion disables everything. */
+html:has(.landing-root){scroll-behavior:smooth}
+@keyframes fxUp{from{opacity:0;translate:0 28px}to{opacity:1;translate:0 0}}
+@keyframes fxDrop{from{opacity:0;translate:0 -24px;scale:.96}to{opacity:1;translate:0 0;scale:1}}
+@keyframes fxWord{from{opacity:0;translate:0 .55em;rotate:4deg;filter:blur(8px)}to{opacity:1;translate:0 0;rotate:0deg;filter:blur(0)}}
+@keyframes fxFloat{0%,100%{translate:0 0;rotate:0deg}50%{translate:-18px 14px;rotate:-5deg}}
+@keyframes fxSpin{to{rotate:360deg}}
+@keyframes fxFade{from{opacity:0;translate:0 -6px}to{opacity:1;translate:0 0}}
+@keyframes fxReveal{from{opacity:0;translate:0 56px;scale:.96}to{opacity:1;translate:0 0;scale:1}}
+.fx-drop{animation:fxDrop .9s cubic-bezier(.22,1,.36,1) both}
+.fx-up{animation:fxUp 1s cubic-bezier(.22,1,.36,1) both}
+.fx-word{display:inline-block;animation:fxWord .9s cubic-bezier(.22,1,.36,1) both}
+.fx-float{animation:fxFloat 16s ease-in-out infinite}
+.fx-spin{animation:fxSpin 14s linear infinite}
+.fx-fade{animation:fxFade .4s cubic-bezier(.22,1,.36,1) both}
+.fx-btn{transition:transform .4s cubic-bezier(.34,1.56,.64,1),box-shadow .4s ease}
+.fx-btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 12px 28px rgba(13,53,66,.22)}
+.fx-btn:active{transform:scale(.96)}
+.fx-card{transition:transform .6s cubic-bezier(.34,1.56,.64,1),box-shadow .6s ease}
+.fx-card:hover{transform:translateY(-10px) rotate(-.6deg);box-shadow:0 24px 48px rgba(13,53,66,.16)}
+@supports (animation-timeline: view()){.fx-reveal{animation:fxReveal linear both;animation-timeline:view();animation-range:entry 0% cover 28%}}
+.fx-progress{position:fixed;top:0;left:0;right:0;height:4px;background:#0D3542;transform-origin:0 50%;scale:0 1;z-index:60;pointer-events:none}
+@keyframes fxGrowX{from{scale:0 1}to{scale:1 1}}
+@keyframes fxNav{to{max-width:940px;box-shadow:0 18px 44px rgba(13,53,66,.34)}}
+@keyframes fxHeroOut{to{opacity:.1;translate:0 -110px;scale:.94;filter:blur(6px)}}
+@keyframes fxArc{to{scale:1.4}}
+@keyframes fxArcRot{from{rotate:-25deg}to{rotate:45deg}}
+@keyframes fxSlide{from{opacity:0;translate:220px 0}to{opacity:1;translate:-80px 0}}
+@keyframes fxZoom{from{opacity:0;scale:.45;filter:blur(12px)}to{opacity:1;scale:1;filter:blur(0)}}
+@keyframes fxCta{from{scale:.84;border-radius:120px;opacity:.35}to{scale:1;border-radius:40px;opacity:1}}
+@keyframes fxStack{to{scale:.94;filter:brightness(.92)}}
+@keyframes fxBar{0%{width:100%}100%{width:8%}}
+@keyframes fxPop{0%,62%{scale:1;box-shadow:0 0 0 0 rgba(228,255,26,0)}70%{scale:1.06;box-shadow:0 0 0 10px rgba(228,255,26,.35)}80%,100%{scale:1;box-shadow:0 0 0 0 rgba(228,255,26,0)}}
+.fx-bar{animation:fxBar 9s linear infinite}
+.fx-pop{animation:fxPop 3.6s ease-in-out infinite}
+@supports (animation-timeline: scroll()){
+.fx-progress{animation:fxGrowX linear both;animation-timeline:scroll(root)}
+.fx-nav{animation:fxDrop .9s cubic-bezier(.22,1,.36,1) both,fxNav linear both;animation-timeline:auto,scroll(root);animation-range:normal,0px 280px}
+.fx-hero-out{animation:fxHeroOut linear both;animation-timeline:view();animation-range:exit 0% exit 100%}
+.fx-arc{animation:fxFloat 16s ease-in-out infinite,fxArc linear both;animation-timeline:auto,scroll(root);animation-range:normal,0px 800px}
+.fx-arc-rot{animation:fxArcRot linear both;animation-timeline:view()}
+.fx-slide{animation:fxSlide linear both;animation-timeline:view();animation-range:entry 0% exit 70%}
+.fx-zoom{animation:fxZoom linear both;animation-timeline:view();animation-range:entry 10% cover 40%}
+.fx-cta{animation:fxCta linear both;animation-timeline:view();animation-range:entry 0% cover 45%}
+.fx-stack{animation:fxReveal linear both,fxStack linear both;animation-timeline:view(),view();animation-range:entry 0% cover 25%,exit-crossing 0% exit-crossing 100%}
+}
+@media (prefers-reduced-motion: reduce){.fx-drop,.fx-up,.fx-word,.fx-float,.fx-spin,.fx-fade,.fx-reveal,.fx-nav,.fx-hero-out,.fx-arc,.fx-arc-rot,.fx-slide,.fx-zoom,.fx-cta,.fx-stack,.fx-bar,.fx-pop{animation:none!important}.fx-progress{display:none}.fx-btn,.fx-card{transition:none!important}.fx-btn:hover,.fx-card:hover{transform:none}}
+@media (prefers-reduced-motion: reduce){html:has(.landing-root){scroll-behavior:auto}}

@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+/* Design tokens from the "Hybrid Settlement Gateway — Product Prototype" canvas (docs/design/project/Main.dc.html). */
+@theme {
+  --color-lime: #E4FF1A;        /* Signal lime: primary action, Completed */
+  --color-lime-soft: #F1FF99;   /* arcs, selected rows */
+  --color-lime-edge: #D4EE00;
+  --color-teal: #0D3542;        /* Deep teal: ink, nav, hero cards */
+  --color-teal-console: #08252E;/* operator rail only */
+  --color-teal-mid: #1E4A58;
+  --color-teal-grey: #4A6670;   /* secondary text */
+  --color-teal-mist: #C9D6DA;   /* secondary text on teal */
+  --color-nav-text: #D5E0E3;
+  --color-nav-muted: #9FB4BA;
+  --color-ground: #F5F7F2;      /* app page ground */
+  --color-line: #DDE3E1;        /* borders, rules */
+  --color-line-soft: #EEF1EE;   /* table row rules */
+  --color-input: #C4CFCC;       /* input borders */
+  --color-pending: #E8EEF0;     /* Processing chip */
+  --color-amber-bg: #FEF3E2;    /* Under review chip */
+  --color-amber: #93370D;
+  --color-amber-dot: #F79009;
+  --color-critical: #B42318;    /* Reversed, Declined */
+  --color-critical-bg: #FEF3F2;
+  --color-critical-line: #FECDCA;
+  --font-sans: var(--font-poppins), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+body {
+  background: var(--color-ground);
+  color: var(--color-teal);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+.num { font-variant-numeric: tabular-nums; }
