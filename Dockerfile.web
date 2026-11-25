@@ -1,0 +1,23 @@
+# Railway image for the Next.js web app (build context = repo root).
+# API_INTERNAL_URL is baked into the /api rewrite at build time (Railway passes service variables as build args).
+FROM node:22-slim AS deps
+WORKDIR /app
+COPY hsg-frontend/package.json hsg-frontend/package-lock.json ./
+RUN npm ci --no-audit --no-fund
+
+FROM node:22-slim AS build
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY hsg-frontend/ ./
+ARG API_INTERNAL_URL
+ENV API_INTERNAL_URL=${API_INTERNAL_URL} NEXT_TELEMETRY_DISABLED=1
+RUN npm run build
+
+FROM node:22-slim AS runtime
+WORKDIR /app
+ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 HOSTNAME=0.0.0.0
+COPY --from=build /app/.next/standalone ./
+COPY --from=build /app/.next/static ./.next/static
+COPY --from=build /app/public ./public
+USER node
+CMD ["node", "server.js"]

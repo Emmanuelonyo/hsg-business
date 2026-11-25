@@ -25,7 +25,7 @@ export const ENV = {
   databaseUrl: process.env.DATABASE_URL!,
   redisUrl: process.env.REDIS_URL ?? 'redis://localhost:6379/0',
   jwtSecret: process.env.JWT_SECRET ?? 'dev-only-change-me',
-  apiPort: Number(process.env.API_PORT ?? 4000),
+  apiPort: Number(process.env.API_PORT ?? process.env.PORT ?? 4000),
   webOrigin: process.env.WEB_ORIGIN ?? 'http://localhost:3000',
   rpcUrl: process.env.RPC_URL ?? 'http://127.0.0.1:8545',
   chainId: Number(process.env.CHAIN_ID ?? 31337),

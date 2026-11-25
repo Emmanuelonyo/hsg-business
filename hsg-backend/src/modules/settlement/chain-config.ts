@@ -14,8 +14,13 @@ export interface ChainConfig {
   providers: ChainKey[];
 }
 
-/** Reads chain.local.json (path from CHAIN_CONFIG_PATH, relative to the backend folder / cwd). */
+/**
+ * Chain config: CHAIN_CONFIG_JSON (raw JSON or base64, for hosts without files, e.g. Railway),
+ * else chain.local.json (path from CHAIN_CONFIG_PATH, relative to the backend folder / cwd).
+ */
 export function loadChainConfig(file = ENV.chainConfigPath): ChainConfig {
+  const inline = process.env.CHAIN_CONFIG_JSON?.trim();
+  if (inline) return JSON.parse(inline.startsWith('{') ? inline : Buffer.from(inline, 'base64').toString('utf8')) as ChainConfig;
   const full = path.isAbsolute(file) ? file : path.resolve(process.cwd(), file);
   if (!fs.existsSync(full)) throw new Error(`chain config ${full} not found: run "npm run chain:deploy" first`);
   return JSON.parse(fs.readFileSync(full, 'utf8')) as ChainConfig;
@@ -25,7 +30,7 @@ export function loadChainConfig(file = ENV.chainConfigPath): ChainConfig {
 export function chainFromEnv(): Chain {
   return defineChain({
     id: ENV.chainId,
-    name: ENV.chainId === 31337 ? 'anvil' : `chain-${ENV.chainId}`,
+    name: ENV.chainId === 31337 ? 'anvil' : ENV.chainId === 84532 ? 'base-sepolia' : `chain-${ENV.chainId}`,
     nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
     rpcUrls: { default: { http: [ENV.rpcUrl] } },
   });

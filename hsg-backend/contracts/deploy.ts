@@ -9,12 +9,18 @@
  *
  * Re-running deploys a NEW token and rewrites chain.local.json (re-seed afterwards).
  * Env: RPC_URL, CHAIN_ID, CHAIN_CONFIG_PATH, CHAIN_MNEMONIC (default: anvil's test mnemonic).
+ *
+ * Public testnet (e.g. Base Sepolia: RPC_URL=https://sepolia.base.org CHAIN_ID=84532):
+ *   - CHAIN_MNEMONIC must be a NEW throwaway wallet whose account 0 holds testnet ETH.
+ *   - `--address` prints account 0's address (to fund from a faucet) and exits.
+ *   - After deploying, account 0 tops up accounts 1-8 with gas (GAS_TOPUP_ETH, default 0.003).
+ *   - Also prints CHAIN_CONFIG_JSON (base64) to paste into the hosting platform's variables.
  */
 import * as dotenv from 'dotenv';
 dotenv.config();
 import * as fs from 'fs';
 import * as path from 'path';
-import { createPublicClient, createWalletClient, defineChain, getAddress, http, toHex } from 'viem';
+import { createPublicClient, createWalletClient, defineChain, formatEther, getAddress, http, parseEther, toHex } from 'viem';
 import { mnemonicToAccount } from 'viem/accounts';
 
 const RPC_URL = process.env.RPC_URL ?? 'http://127.0.0.1:8545';
@@ -62,6 +68,10 @@ function deriveAccount(i: number) {
 }
 
 async function main() {
+  if (process.argv.includes('--address')) {
+    console.log(mnemonicToAccount(MNEMONIC, { addressIndex: 0 }).address);
+    return;
+  }
   const chain = defineChain({
     id: CHAIN_ID, name: CHAIN_ID === 31337 ? 'anvil' : `chain-${CHAIN_ID}`,
     nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 }, rpcUrls: { default: { http: [RPC_URL] } },
@@ -73,6 +83,16 @@ async function main() {
   const { abi, bytecode } = loadArtifact();
   const deployerAcct = mnemonicToAccount(MNEMONIC, { addressIndex: 0 });
   const wallet = createWalletClient({ account: deployerAcct, chain, transport: http(RPC_URL) });
+  const isLocal = CHAIN_ID === 31337;
+
+  // On a public testnet, check the deployer can pay for the deploy, mints and the gas top-ups first.
+  const topup = parseEther(process.env.GAS_TOPUP_ETH ?? '0.003');
+  if (!isLocal) {
+    const bal = await publicClient.getBalance({ address: deployerAcct.address });
+    const need = topup * 8n + parseEther('0.002');
+    console.log(`deployer ${deployerAcct.address} has ${formatEther(bal)} ETH on chain ${CHAIN_ID}`);
+    if (bal < need) throw new Error(`deployer needs at least ${formatEther(need)} ETH: fund ${deployerAcct.address} from a faucet and re-run`);
+  }
 
   // 1. Deploy
   const deployHash = await wallet.deployContract({ abi, bytecode });
@@ -100,6 +120,19 @@ async function main() {
     console.log(`  ${t.label} ${t.address} balance ${bal / 10n ** 6n} mUSD`);
   }
 
+  // 3b. Public testnet only: give every operational wallet gas (anvil accounts are pre-funded).
+  if (!isLocal) {
+    let gasNonce = await publicClient.getTransactionCount({ address: deployer.address, blockTag: 'pending' });
+    const sends: `0x${string}`[] = [];
+    for (const w of [...treasury, ...providers]) {
+      const have = await publicClient.getBalance({ address: w.address });
+      if (have >= topup / 2n) continue;
+      sends.push(await wallet.sendTransaction({ to: w.address, value: topup - have, nonce: gasNonce++ }));
+    }
+    for (const h of sends) await publicClient.waitForTransactionReceipt({ hash: h });
+    console.log(`topped up ${sends.length} wallet(s) with gas (target ${formatEther(topup)} ETH each)`);
+  }
+
   // 4. Write chain.local.json
   const config = {
     rpcUrl: RPC_URL,
@@ -111,6 +144,10 @@ async function main() {
   };
   fs.writeFileSync(OUT_PATH, JSON.stringify(config, null, 2) + '\n');
   console.log(`wrote ${OUT_PATH}`);
+  if (!isLocal) {
+    console.log('\nCHAIN_CONFIG_JSON for the hosting platform (base64; contains private keys of these TESTNET wallets):');
+    console.log(Buffer.from(JSON.stringify(config)).toString('base64'));
+  }
 
   // 5. A fresh deploy usually means a fresh anvil: drop cached nonce counters so settlement re-reads them from the chain.
   await clearNonceCounters();

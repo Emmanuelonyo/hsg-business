@@ -27,7 +27,7 @@ import { HOUSE_ACCOUNTS } from '../src/common/accounts';
 
 const PASSWORD = 'Passw0rd!';
 const BANK_NAME = 'Providus Bank';
-const DEMO_WEBHOOK_URL = 'http://localhost:4000/api/sim/webhook-sink';
+const DEMO_WEBHOOK_URL = process.env.DEMO_WEBHOOK_URL ?? 'http://localhost:4000/api/sim/webhook-sink';
 const LOAD_SME_COUNT = 100;
 /** NGN 50,000,000.00 in kobo: pre-funding for load-test SMEs only. */
 const LOAD_SME_FUNDING_KOBO = 5_000_000_000n;
