@@ -1,0 +1,18 @@
+Database: postgresql://***@localhost:5432/hsg_test
+
+Target: entry seq 134 (tamper-demo:01M8AKB7Q77PW7X38YFP86GWBC), line jl_01M8AKB7SYVJNAAHQECHWYNKWX, amount 10000
+
+--- (a) UPDATE journal_lines as the application role (hsg_app) ---
+REJECTED: ERROR: permission denied for table journal_lines
+
+--- (a2) Same UPDATE as the owner, triggers active ---
+REJECTED by trigger: ERROR: journal is append-only: UPDATE on journal_lines is not allowed
+
+verifyChain before tamper: { ok: true, broken_at: null, checked: 134 }
+
+--- (b) Superuser bypasses triggers (session_replication_role = replica) and alters the amount ---
+Altered line jl_01M8AKB7SYVJNAAHQECHWYNKWX: 10000 -> 100010000
+verifyChain after tamper:  { ok: false, broken_at: '134', checked: 133 }
+DETECTED: chain broken at seq 134
+
+Restored original amount. verifyChain: { ok: true, broken_at: null, checked: 134 }

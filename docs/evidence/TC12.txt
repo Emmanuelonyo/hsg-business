@@ -1,0 +1,8 @@
+TC12 velocity, SME sme077@hsg.test, 2026-11-26T00:15:58Z
+HSG-20261126-000005 COMPLETED  velocity: PASS {"rule": "VELOCITY", "limit": 5, "value": 1, "window_min": 10}
+HSG-20261126-000006 COMPLETED  velocity: PASS {"rule": "VELOCITY", "limit": 5, "value": 2, "window_min": 10}
+HSG-20261126-000007 COMPLETED  velocity: PASS {"rule": "VELOCITY", "limit": 5, "value": 3, "window_min": 10}
+HSG-20261126-000008 COMPLETED  velocity: PASS {"rule": "VELOCITY", "limit": 5, "value": 4, "window_min": 10}
+HSG-20261126-000009 COMPLETED  velocity: PASS {"rule": "VELOCITY", "limit": 5, "value": 5, "window_min": 10}
+HSG-20261126-000010 HELD       velocity: HOLD {"rule": "VELOCITY", "limit": 5, "value": 6, "reason": "More than 5 transfers from this business within 10 minutes.", "window_min": 10}
+review queue held: [('HSG-20261126-000010', 'VELOCITY', 'More than 5 transfers from this business within 10 minutes.')]
