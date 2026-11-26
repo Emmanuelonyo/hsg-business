@@ -1,0 +1,67 @@
+{
+ "id": "tr_01M8AJX3BT6G2ZT6XA2K6WEZJ6",
+ "reference": "HSG-20261126-000002",
+ "state": "COMPLETED",
+ "failure_reason": null,
+ "created_at": "2026-11-26T00:08:22.137Z",
+ "completed_at": "2026-11-26T00:08:30.383Z",
+ "reversed_at": null,
+ "provider": "Atlas FX",
+ "payout_status": "PAID",
+ "saga_steps": [
+  [
+   "SCREEN",
+   1,
+   "COMPLETED"
+  ],
+  [
+   "RESERVE",
+   1,
+   "COMPLETED"
+  ],
+  [
+   "MATCH",
+   1,
+   "COMPLETED"
+  ],
+  [
+   "CHAIN_SEND",
+   1,
+   "COMPLETED"
+  ],
+  [
+   "CHAIN_CONFIRM",
+   1,
+   "FAILED"
+  ],
+  [
+   "CHAIN_CONFIRM",
+   2,
+   "COMPLETED"
+  ],
+  [
+   "PAYOUT",
+   1,
+   "COMPLETED"
+  ],
+  [
+   "FINALISE",
+   1,
+   "COMPLETED"
+  ]
+ ],
+ "chain_transactions": [
+  [
+   "SEND",
+   "0x7ecb4d183f5765887f1051b6bcc901ebe317ff92aebfc873d86a27052b71cca0",
+   "CONFIRMED",
+   "2888"
+  ]
+ ],
+ "journal": [
+  "RESERVE",
+  "CHAIN_CONFIRMED",
+  "PAYOUT_NGN",
+  "PAYOUT_USD"
+ ]
+}

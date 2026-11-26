@@ -59,7 +59,12 @@ Single-transfer observations: happy path completed in about 12 s; on-chain confi
 ## Acceptance tests (TC01–TC14) status
 Executed end to end on the running system: TC03 NIP inflow, TC04 quote then transfer, TC06 beneficiary fails screening (declined at SCREEN, no chain transaction), TC07 happy path (completed; webhook logged; reconciliation variance 0), TC08 provider out of capacity (reversed, funds released), TC10 duplicate submission (identical response, one transfer), TC14 payout fails after chain leg (return transaction confirmed, reversing entries, balance restored).
 Executed in development/integration tests: TC01/TC02 KYB approval (clean → VERIFIED; watchlist match → REJECTED), TC09 chain delay keeps confirmation pending (unit test), TC11 tamper (trigger rejects UPDATE; superuser alteration makes verifyChain return broken_at), TC12 velocity (unit test), TC13 reconciliation variance (unit test).
-Not yet run as screenshot evidence on the final build: TC05, TC09, TC11, TC12, TC13.
+Executed end to end on 26 Nov 2026 (script `hsg-backend/scripts/acceptance-tc05-08-09.sh`, evidence in `docs/evidence/`):
+- TC05 expired quote: confirming 62 s after the quote returned `QUOTE_EXPIRED` ("This quote has expired. Get a new quote to continue."); no transfer and no journal entry were created for it.
+- TC08 run 1: with the normally chosen provider (Meridian Liquidity) set to zero capacity, the transfer COMPLETED and was routed to Atlas FX.
+- TC08 run 2: with all three providers at zero capacity, the transfer was REVERSED; the SME saw "Reversed" with NGN 1,595,400.00 returned and an unchanged available balance.
+- TC09 chain congestion: with a 120 s chain delay, CHAIN_CONFIRM polled 25 times (every 5 s) without re-broadcasting; exactly one chain transaction; the transfer COMPLETED 126 s after submission.
+Not yet captured as screenshots on the final build: TC11, TC12, TC13 (covered by automated tests).
 
 ## Build process (facts only)
 - The approved two build cycles collapsed into a compressed schedule: the vertical slice was built and integrated on 25–26 Nov 2026.

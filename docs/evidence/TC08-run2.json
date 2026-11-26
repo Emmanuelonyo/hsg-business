@@ -1,0 +1,38 @@
+{
+ "id": "tr_01M8AJXCGGQ9CRE32K3DVZ5XA2",
+ "reference": "HSG-20261126-000003",
+ "state": "REVERSED",
+ "failure_reason": "We could not complete this payment right now. Your naira has been returned.",
+ "created_at": "2026-11-26T00:08:31.503Z",
+ "completed_at": null,
+ "reversed_at": "2026-11-26T00:08:31.532Z",
+ "provider": null,
+ "payout_status": null,
+ "saga_steps": [
+  [
+   "SCREEN",
+   1,
+   "COMPLETED"
+  ],
+  [
+   "RESERVE",
+   1,
+   "COMPLETED"
+  ],
+  [
+   "MATCH",
+   1,
+   "FAILED"
+  ],
+  [
+   "COMP_RESERVE",
+   1,
+   "COMPLETED"
+  ]
+ ],
+ "chain_transactions": [],
+ "journal": [
+  "RESERVE",
+  "RELEASE"
+ ]
+}

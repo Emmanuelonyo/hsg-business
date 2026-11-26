@@ -1,0 +1,22 @@
+{
+ "quote": {
+  "id": "qt_01M8AJXFPSHAM7Y12HY20RTX93",
+  "usd_amount": "100000",
+  "rate": "1576.85",
+  "principal_ngn": "157685000",
+  "fee_ngn": "750000",
+  "total_ngn": "158435000",
+  "expires_at": "2026-11-26T00:09:34.777Z",
+  "created_at": "2026-11-26T00:08:34.777Z"
+ },
+ "confirm_response": {
+  "error": {
+   "code": "QUOTE_EXPIRED",
+   "message": "This quote has expired. Get a new quote to continue."
+  }
+ },
+ "journal_total_before": 122,
+ "journal_total_after": 122,
+ "transfers_created_for_TC05": 0,
+ "note": "journal may grow from the concurrent TC09 transfer; no transfer or entry was created for the expired quote"
+}
